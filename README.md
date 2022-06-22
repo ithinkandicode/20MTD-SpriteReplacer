@@ -5,6 +5,17 @@ Code starts at Plugin.cs, the texture replace code is in Utils.cs.
 
 Credit to [BugFables-AssetsRedirector](https://github.com/aldelaro5/BugFables-AssetsRedirector), the code to make a replacement texture comes from their repo ([here](https://github.com/aldelaro5/BugFables-AssetsRedirector/blob/1.0.0/AssetsRedirection.cs#L81)).
 
+## Usage
+
+1. Install BepInEx
+1. Add the plugin DLL to BepInEx\plugins
+1. Create a folder in the main game folder, named `Mods`
+1. In the Mods folder, make another folder, called `Textures`
+1. Add a folder for your mod, without spaces (eg `MyTextureMod`).
+1. Add your textures to your mod folder, using [this folder structure](https://github.com/ithinkandicode/20MTD-Graphical-Overhaul/blob/main/filetree.txt)
+1. Update the plugin config to point to your folder
+  - Config coming soon...
+
 
 ## Setup
 

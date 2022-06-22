@@ -56,7 +56,7 @@ namespace SpriteReplacer
 					*/
 				}
 			}
-			Console.WriteLine("[~MODS~] PANEL_LOG: END");
+			//Console.WriteLine("[~MODS~] PANEL_LOG: END");
 
 
 		}

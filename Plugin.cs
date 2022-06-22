@@ -1,5 +1,6 @@
 ﻿using BepInEx;
 using BepInEx.Logging;
+using BepInEx.Configuration;
 using System;
 using System.Collections;
 using System.IO;
@@ -11,11 +12,21 @@ namespace SpriteReplacer
     [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
     public class SpriteReplacer : BaseUnityPlugin
     {
+        // Register config settings
+        public static ConfigEntry<string> configTextureModFolder;
+
         private void Awake()
         {
+            // Setup config (args: section, key, default, description)
+            configTextureModFolder = Config.Bind<string>("General", "TextureModFolder", "Vanilla", "Name of the active texture mod folder");
+
             Logger.LogInfo($"Plugin {PluginInfo.PLUGIN_GUID} is loaded!");
 
-            Logger.LogInfo("Path to texturemods directory: " + Application.dataPath + "texturemods");
+            string modPath = configTextureModFolder.Value;
+            string subfolder = "";
+            string currentModPath = Path.Combine(Path.GetDirectoryName(Application.dataPath), "Mods", "Textures", modPath, subfolder);
+
+            Logger.LogInfo("Curent texture mods path: " + currentModPath);
 
             // Debug options, in case you want to test specific patchers
             bool doPanels = true; // GUI, and everything in the menus before a run (incl. character sprites, weapons, rune icons)

@@ -354,3 +354,5 @@ MigrationBackup/
 # CUSTOM STUFF
 lib/*.dll
 lib/*.xml
+
+!bin/Debug/netstandard2.0/SpriteReplacer.dll

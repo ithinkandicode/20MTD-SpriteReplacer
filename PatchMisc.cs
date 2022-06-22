@@ -25,8 +25,10 @@ namespace SpriteReplacer
 
             //Console.WriteLine("@@@|found portrait: " + currPortrait.name + "|@@@");
 
-
-            Utils.ReplaceSpriteTexture(currPortrait);
+            if (currPortrait != null)
+            {
+                Utils.ReplaceSpriteTexture(currPortrait);
+            }
         }
 
         /*
