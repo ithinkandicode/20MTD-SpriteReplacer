@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31515.178
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpriteReplacer", "SpriteReplacer.csproj", "{27211C80-2E46-4F38-A8B8-05B0F1E3A237}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{27211C80-2E46-4F38-A8B8-05B0F1E3A237}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27211C80-2E46-4F38-A8B8-05B0F1E3A237}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27211C80-2E46-4F38-A8B8-05B0F1E3A237}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27211C80-2E46-4F38-A8B8-05B0F1E3A237}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {52D690F3-F9C9-4F60-9FEE-3EB2056A0B62}
+	EndGlobalSection
+EndGlobal
