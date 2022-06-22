@@ -23,7 +23,7 @@ namespace SpriteReplacer
             // Note: This should mean we can change names and descriptions too
             Sprite currPortrait = __instance.data.portrait;
 
-            Console.WriteLine("@@@|found portrait: " + currPortrait.name + "|@@@");
+            //Console.WriteLine("@@@|found portrait: " + currPortrait.name + "|@@@");
 
 
             Utils.ReplaceSpriteTexture(currPortrait);

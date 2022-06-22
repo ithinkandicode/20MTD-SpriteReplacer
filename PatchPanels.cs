@@ -15,18 +15,20 @@ namespace SpriteReplacer
         [HarmonyPatch(typeof(Panel), "Start")]
         [HarmonyPrefix]
         static void StartPrefix(ref Panel __instance)
-        {
-			
-			Console.WriteLine("");
-			Console.WriteLine("[~MODS~] PANEL_LOG: START");
+        {			
+			//Console.WriteLine("");
+			//Console.WriteLine("[~MODS~] PANEL_LOG: START");
+
 			CanvasGroup[] canvasComponentsInChildren = __instance.GetComponentsInChildren<CanvasGroup>();
+
 			for (int i = 0; i < canvasComponentsInChildren.Length; i++)
 			{
 				GameObject currObject = canvasComponentsInChildren[i].gameObject;
-				Console.WriteLine("[~MODS~] PANEL:" + currObject.name);
+				//Console.WriteLine("[~MODS~] PANEL:" + currObject.name);
+
 				foreach (Image currImg in currObject.GetComponentsInChildren<Image>())
 				{
-					Console.WriteLine("[~MODS~] PANEL_Image:" + currImg.name);
+					//Console.WriteLine("[~MODS~] PANEL_Image:" + currImg.name);
 
 					Utils.ReplaceSpriteTexture(currImg.sprite);
 

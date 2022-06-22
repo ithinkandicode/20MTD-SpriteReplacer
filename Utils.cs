@@ -17,15 +17,15 @@ namespace SpriteReplacer
         {
             if (targetSprite != null)
             {
-                Console.WriteLine("[Utils] Sprite.name:" + targetSprite.name);
+                //Console.WriteLine("[SpriteReplacer] Sprite.name:" + targetSprite.name);
                 Texture2D spriteTexture = targetSprite.texture;
+
                 if (spriteTexture != null)
                 {
-                    Console.WriteLine("[Utils] Sprite.Texture.name:" + spriteTexture.name);
-
                     string path = Path.Combine(Path.GetDirectoryName(Application.dataPath), "texturemods", spriteTexture.name);
-                    
-                    Console.WriteLine("[Utils] SearchPath:" + path + ".png");
+
+                    //Console.WriteLine("[SpriteReplacer] Sprite.Texture.name:" + spriteTexture.name);
+                    //Console.WriteLine("[SpriteReplacer] SearchPath:" + path + ".png");
 
                     if (File.Exists(path + ".png"))
                     {
@@ -36,13 +36,13 @@ namespace SpriteReplacer
                         sprite.name = ogSprite.name;
                         spriteTexture = sprite.texture;
 
-                        Console.WriteLine("[SpriteReplacer:PoolHandler>Awake] OK! Replaced: " + path + ".png");
+                        Console.WriteLine("[SpriteReplacer] OK! Replaced: " + path + ".png");
 
                         return true;
                     }
                     else
                     {
-                        Console.WriteLine("[Utils] FAIL! No image at: " + path + ".png");
+                        Console.WriteLine("[SpriteReplacer] FAIL! No image at: " + path + ".png");
                     }
                 }
             }
