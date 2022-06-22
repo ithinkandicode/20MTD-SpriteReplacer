@@ -1,10 +1,9 @@
 # 20MTD SpriteReplacer
 BepInEx plugin to replace sprites (textures) in 20 Minutes Till Dawn.
 
-More code starts at Plugin.cs
+Code starts at Plugin.cs, the texture replace code is in Utils.cs.
 
-Texture replace code is in Utils.cs
-
+Credit to [BugFables-AssetsRedirector](https://github.com/aldelaro5/BugFables-AssetsRedirector), the code to make a replacement texture comes from their repo ([here](https://github.com/aldelaro5/BugFables-AssetsRedirector/blob/1.0.0/AssetsRedirection.cs#L81)).
 
 
 ## Setup
