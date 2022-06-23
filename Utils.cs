@@ -41,13 +41,13 @@ namespace SpriteReplacer
                         sprite.name = ogSprite.name;
                         spriteTexture = sprite.texture;
 
-                        Log.LogDebug("OK! Replaced: " + path);
+                        Log.LogInfo("OK! Replaced: " + path);
 
                         return true;
                     }
                     else
                     {
-                        Log.LogDebug("FAIL! No image at: " + path);
+                        Log.LogInfo("FAIL! No image at: " + path);
                     }
                 }
             }
