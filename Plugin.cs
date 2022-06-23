@@ -30,7 +30,9 @@ namespace SpriteReplacer
             string subfolder = "";
             string currentModPath = Path.Combine(Path.GetDirectoryName(Application.dataPath), "Mods", "Textures", modPath, subfolder);
 
-            Log.LogInfo("Curent texture mods path: " + currentModPath);
+
+            Log.LogInfo("Using Textures: " + configTextureModFolder.Value);
+            Log.LogDebug(String.Equals(configTextureModFolder, "Vanilla") ? "Using Vanilla textures." : "Modded texture path: " + currentModPath);
 
             // Debug options, in case you want to test specific patchers
             bool doPanels = true; // GUI, and everything in the menus before a run (incl. character sprites, weapons, rune icons)
