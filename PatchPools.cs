@@ -29,8 +29,7 @@ namespace SpriteReplacer
             {
                 GameObject GO = objectPoolItem.objectToPool;
 
-                Log.LogDebug("[SpriteReplacer:PoolHandler>Awake] Item to pool (tag1/amount/shouldExpand/tag2): " + objectPoolItem.tag + " " + objectPoolItem.amountToPool + " " + objectPoolItem.shouldExpand + " " + objectPoolItem.objectToPool.tag);
-                Log.LogDebug("[SpriteReplacer:PoolHandler>Awake] PooledItem.name: " + GO.name); // GameObject.name
+                Log.LogDebug("[Pools>Awake] Item to pool (name|tag1|amount|shouldExpand|tag2): " + GO.name + "|" + objectPoolItem.tag + "|" + objectPoolItem.amountToPool + "|" + objectPoolItem.shouldExpand + "|" + objectPoolItem.objectToPool.tag);
 
                 SpriteRenderer currSpriteRenderer = GO.GetComponent<SpriteRenderer>();
 
@@ -39,35 +38,6 @@ namespace SpriteReplacer
                     if (currSpriteRenderer.sprite != null)
                     {
                         Utils.ReplaceSpriteTexture(currSpriteRenderer.sprite);
-
-                        /*
-                        Log.LogDebug("[SpriteReplacer:PoolHandler>Awake] PooledItem.sprite.name: " + currSpriteRenderer.sprite.name);
-
-                        Texture2D spriteTexture = currSpriteRenderer.sprite.texture;
-
-                        if (spriteTexture != null)
-                        {
-                            Log.LogDebug("[SpriteReplacer:PoolHandler>Awake] PooledItem.sprite.texture.name:" + spriteTexture.name);
-
-                            string path = Path.Combine(Path.GetDirectoryName(Application.dataPath), "texturemods", spriteTexture.name);
-
-                            if (File.Exists(path + ".png"))
-                            {
-                                Log.LogInfo("[SpriteReplacer:PoolHandler>Awake] OK! Replaced (" + objectPoolItem.objectToPool.name + "|" + spriteTexture.name + "): " + path + ".png");
-
-                                Sprite ogSprite = currSpriteRenderer.sprite;
-                                ogSprite.texture.LoadImage(File.ReadAllBytes(path + ".png"));
-                                Vector2 standardisedPivot = new Vector2(ogSprite.pivot.x / ogSprite.rect.width, ogSprite.pivot.y / ogSprite.rect.height);
-                                Sprite sprite = Sprite.Create(ogSprite.texture, ogSprite.rect, standardisedPivot, ogSprite.pixelsPerUnit);
-                                sprite.name = ogSprite.name;
-                                spriteTexture = sprite.texture;
-                            }
-                            else
-                            {
-                                Log.LogError("[SpriteReplacer:PoolHandler>Awake] FAIL! No image found at: " + path + ".png");
-                            }
-                        }
-                        */
                     }
                 }
             }
@@ -79,6 +49,8 @@ namespace SpriteReplacer
         [HarmonyPrefix]
         static bool AddObjectPrefix(string tag, GameObject GO, int amt = 3, bool exp = true)
         {
+            Log.LogDebug("[Pools>AddObject] Item to pool (name|tag|amount|shouldExpand): " + GO.name + "|" + tag + "|" + amt + "|" + exp);
+
             SpriteRenderer currSpriteRenderer = GO.GetComponent<SpriteRenderer>();
 
             if (currSpriteRenderer != null)
@@ -86,35 +58,6 @@ namespace SpriteReplacer
                 if (currSpriteRenderer.sprite != null)
                 {
                     Utils.ReplaceSpriteTexture(currSpriteRenderer.sprite);
-
-                    /*
-                    Log.LogDebug("[SpriteReplacer:PoolHandler>AddObject] PooledItem.sprite.name: " + currSpriteRenderer.sprite.name);
-
-                    Texture2D spriteTexture = currSpriteRenderer.sprite.texture;
-
-                    if (spriteTexture != null)
-                    {
-                        Log.LogDebug("[SpriteReplacer:PoolHandler>AddObject] PooledItem.sprite.texture.name:" + spriteTexture.name);
-
-                        string path = Path.Combine(Path.GetDirectoryName(Application.dataPath), "texturemods", spriteTexture.name);
-
-                        if (File.Exists(path + ".png"))
-                        {
-                            Log.LogDebug("[SpriteReplacer:PoolHandler>AddObject] OK! Replaced (" + GO.name + "|" + spriteTexture.name + "): " + path + ".png");
-
-                            Sprite ogSprite = currSpriteRenderer.sprite;
-                            ogSprite.texture.LoadImage(File.ReadAllBytes(path + ".png"));
-                            Vector2 standardisedPivot = new Vector2(ogSprite.pivot.x / ogSprite.rect.width, ogSprite.pivot.y / ogSprite.rect.height);
-                            Sprite sprite = Sprite.Create(ogSprite.texture, ogSprite.rect, standardisedPivot, ogSprite.pixelsPerUnit);
-                            sprite.name = ogSprite.name;
-                            spriteTexture = sprite.texture;
-                        }
-                        else
-                        {
-                            Log.LogError("[SpriteReplacer:PoolHandler] FAIL! No image found at: " + path + ".png");
-                        }
-                    }
-                    */
                 }
             }
 

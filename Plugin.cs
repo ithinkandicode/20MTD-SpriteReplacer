@@ -15,29 +15,45 @@ namespace SpriteReplacer
         internal static ManualLogSource Log;
 
         // Register config settings
+        public static ConfigEntry<string> configEnableTextureMods;
         public static ConfigEntry<string> configTextureModFolder;
+        public static ConfigEntry<string> configDebugDoPanels;
+        public static ConfigEntry<string> configDebugDoPools;
+        public static ConfigEntry<string> configDebugDoMisc;
 
         private void Awake()
         {
             Log = base.Logger;
 
-            // Setup config (args: section, key, default, description)
-            configTextureModFolder = Config.Bind<string>("General", "TextureModFolder", "Vanilla", "Name of the active texture mod folder");
+            // Config: General (args: section, key, default, description)
+            configEnableTextureMods = Config.Bind<string>("General", "EnableTextureMods", "True", "True to enable texture mods, False to completely disable them");
+            configTextureModFolder  = Config.Bind<string>("General", "TextureModFolder", "Vanilla", "Name of the active texture mod folder");
+
+            // Config: Debug (in case you want to test specific patchers)
+            configDebugDoPanels = Config.Bind<string>("Debug", "DebugPatchPanels", "True", "Debug option. Set to False to skip patching panels (GUI, and everything in the menus before a run, including character sprites, weapons, and rune icons)");
+            configDebugDoPools  = Config.Bind<string>("Debug", "DebugPatchPools",  "True", "Debug option. Set to False to skip patching pools (most enemies and pickups)");
+            configDebugDoMisc   = Config.Bind<string>("Debug", "DebugPatchMisc",   "True", "Debug option. Set to False to skip patching misc (special cases that aren't covered by panels/pools)");
 
             Log.LogInfo($"Plugin {PluginInfo.PLUGIN_GUID} is loaded!");
+
+            bool enableMods = bool.Parse(configEnableTextureMods.Value);
+
+            if (!enableMods)
+            {
+                Log.LogInfo("Texture mods are disabled in the config (BepInEx\\config\\SpriteReplacer.cfg). Default game textures will be used");
+                return;
+            }
 
             string modPath = configTextureModFolder.Value;
             string subfolder = "";
             string currentModPath = Path.Combine(Path.GetDirectoryName(Application.dataPath), "Mods", "Textures", modPath, subfolder);
 
+            Log.LogInfo("Current textures folder: " + configTextureModFolder.Value);
+            Log.LogInfo("Current textures path: " + currentModPath);
 
-            Log.LogInfo("Using Textures: " + configTextureModFolder.Value);
-            Log.LogDebug(String.Equals(configTextureModFolder, "Vanilla") ? "Using Vanilla textures." : "Modded texture path: " + currentModPath);
-
-            // Debug options, in case you want to test specific patchers
-            bool doPanels = true; // GUI, and everything in the menus before a run (incl. character sprites, weapons, rune icons)
-            bool doPools = true; // Loads of sprites, incl. enemies and pickups
-            bool doMisc = true; // Misc things that aren't covered bythe above
+            bool doPanels = bool.Parse(configDebugDoPanels.Value);
+            bool doPools = bool.Parse(configDebugDoPools.Value);
+            bool doMisc = bool.Parse(configDebugDoMisc.Value);
 
             if (doPanels)
             {
@@ -58,7 +74,7 @@ namespace SpriteReplacer
             {
                 try
                 {
-                    // Poolhandler: Most things in the battle (ie. game) screen
+                    // Pools: Most things in the battle (ie. game) screen
                     Harmony.CreateAndPatchAll(typeof(PatchPools));
                 }
                 catch (Exception e)
@@ -72,7 +88,7 @@ namespace SpriteReplacer
             {
                 try
                 {
-                    // MiscHandler: Everything else, special cases
+                    // Misc: Everything else, special cases
                     Harmony.CreateAndPatchAll(typeof(PatchMisc));
                 }
                 catch (Exception e)

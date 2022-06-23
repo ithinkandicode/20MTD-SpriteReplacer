@@ -17,48 +17,24 @@ namespace SpriteReplacer
         [HarmonyPrefix]
         static void StartPrefix(ref Panel __instance)
         {
-            Log.LogDebug("PANEL_LOG: START");
-
+            Log.LogDebug("[Panel] START of panel loop...");
             CanvasGroup[] canvasComponentsInChildren = __instance.GetComponentsInChildren<CanvasGroup>();
 
-            for (int i = 0; i < canvasComponentsInChildren.Length; i++)
+            for (int canvasIndex = 0; canvasIndex < canvasComponentsInChildren.Length; canvasIndex++)
             {
-                GameObject currObject = canvasComponentsInChildren[i].gameObject;
-                Log.LogDebug("PANEL:" + currObject.name);
+                GameObject currObject = canvasComponentsInChildren[canvasIndex].gameObject;
+                Log.LogDebug("[Panel] Panel name ("+ canvasIndex.ToString() +"): " + currObject.name);
+                int panelIndex = 0;
 
                 foreach (Image currImg in currObject.GetComponentsInChildren<Image>())
                 {
-                    Log.LogDebug("PANEL_Image:" + currImg.name);
-
+                    Log.LogDebug("[Panel] Panel image (" + panelIndex.ToString() + "): " + currImg.name);
                     Utils.ReplaceSpriteTexture(currImg.sprite);
-
-                    /*
-					if (currImg.sprite != null)
-					{
-						Log.LogDebug("PANEL_Image:Sprite:BASE===:" + currImg.sprite.name);
-						Texture2D spriteTexture = currImg.sprite.texture;
-						if (spriteTexture != null)
-						{
-							Log.LogDebug("PANEL_Image:Sprite:Texture:" + spriteTexture.name);
-							string path = Path.Combine(Path.GetDirectoryName(Application.dataPath), "texturemods", spriteTexture.name);
-							Log.LogDebug("SearchPath:" + path + ".png");
-							if (File.Exists(path + ".png"))
-							{
-								Sprite ogSprite = currImg.sprite;
-								ogSprite.texture.LoadImage(File.ReadAllBytes(path + ".png"));
-								Vector2 standardisedPivot = new Vector2(ogSprite.pivot.x / ogSprite.rect.width, ogSprite.pivot.y / ogSprite.rect.height);
-								Sprite sprite = Sprite.Create(ogSprite.texture, ogSprite.rect, standardisedPivot, ogSprite.pixelsPerUnit);
-								sprite.name = ogSprite.name;
-								spriteTexture = sprite.texture;
-							}
-						}
-					}
-					*/
+                    panelIndex++;
                 }
             }
-            Log.LogDebug("PANEL_LOG: END");
 
-
+            Log.LogDebug("[Panel] END of panel loop");
         }
     }
 }
