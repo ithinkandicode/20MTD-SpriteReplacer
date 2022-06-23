@@ -15,28 +15,28 @@ namespace SpriteReplacer
         internal static ManualLogSource Log;
 
         // Register config settings
-        public static ConfigEntry<string> configEnableTextureMods;
+        public static ConfigEntry<bool> configEnableTextureMods;
         public static ConfigEntry<string> configTextureModFolder;
-        public static ConfigEntry<string> configDebugDoPanels;
-        public static ConfigEntry<string> configDebugDoPools;
-        public static ConfigEntry<string> configDebugDoMisc;
+        public static ConfigEntry<bool> configDebugDoPanels;
+        public static ConfigEntry<bool> configDebugDoPools;
+        public static ConfigEntry<bool> configDebugDoMisc;
 
         private void Awake()
         {
             Log = base.Logger;
 
             // Config: General (args: section, key, default, description)
-            configEnableTextureMods = Config.Bind<string>("General", "EnableTextureMods", "True", "True to enable texture mods, False to completely disable them");
+            configEnableTextureMods = Config.Bind<bool>("General", "EnableTextureMods", true, "Set to true to enable texture mods, false to completely disable them");
             configTextureModFolder  = Config.Bind<string>("General", "TextureModFolder", "Vanilla", "Name of the active texture mod folder");
 
             // Config: Debug (in case you want to test specific patchers)
-            configDebugDoPanels = Config.Bind<string>("Debug", "DebugPatchPanels", "True", "Debug option. Set to False to skip patching panels (GUI, and everything in the menus before a run, including character sprites, weapons, and rune icons)");
-            configDebugDoPools  = Config.Bind<string>("Debug", "DebugPatchPools",  "True", "Debug option. Set to False to skip patching pools (most enemies and pickups)");
-            configDebugDoMisc   = Config.Bind<string>("Debug", "DebugPatchMisc",   "True", "Debug option. Set to False to skip patching misc (special cases that aren't covered by panels/pools)");
+            configDebugDoPanels = Config.Bind<bool>("xDebug", "DebugPatchPanels", true, "Debug option. Set to false to skip patching panels (GUI, and everything in the menus before a run, including character sprites, weapons, and rune icons)");
+            configDebugDoPools  = Config.Bind<bool>("xDebug", "DebugPatchPools", true, "Debug option. Set to false to skip patching pools (most enemies and pickups)");
+            configDebugDoMisc   = Config.Bind<bool>("xDebug", "DebugPatchMisc", true, "Debug option. Set to false to skip patching misc (special cases that aren't covered by panels/pools)");
 
             Log.LogInfo($"Plugin {PluginInfo.PLUGIN_GUID} is loaded!");
 
-            bool enableMods = bool.Parse(configEnableTextureMods.Value);
+            bool enableMods = configEnableTextureMods.Value;
 
             if (!enableMods)
             {
@@ -51,9 +51,9 @@ namespace SpriteReplacer
             Log.LogInfo("Current textures folder: " + configTextureModFolder.Value);
             Log.LogInfo("Current textures path: " + currentModPath);
 
-            bool doPanels = bool.Parse(configDebugDoPanels.Value);
-            bool doPools = bool.Parse(configDebugDoPools.Value);
-            bool doMisc = bool.Parse(configDebugDoMisc.Value);
+            bool doPanels = configDebugDoPanels.Value;
+            bool doPools = configDebugDoPools.Value;
+            bool doMisc = configDebugDoMisc.Value;
 
             if (doPanels)
             {
