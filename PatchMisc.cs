@@ -9,6 +9,7 @@ using BepInEx;
 using HarmonyLib;
 using flanne;
 using flanne.UI;
+using static SpriteReplacer.SpriteReplacer;
 
 namespace SpriteReplacer
 {
@@ -23,7 +24,7 @@ namespace SpriteReplacer
             // Note: This should mean we can change names and descriptions too
             Sprite currPortrait = __instance.data.portrait;
 
-            //Console.WriteLine("@@@|found portrait: " + currPortrait.name + "|@@@");
+            Log.LogDebug("found portrait: " + currPortrait.name);
 
             if (currPortrait != null)
             {
@@ -37,16 +38,16 @@ namespace SpriteReplacer
         [HarmonyPrefix]
         static void RefreshPrefix(ref CharacterDescription __instance)
         {
-            Console.WriteLine("!! Replacing texture for CharacterDescription");
-            Console.WriteLine("!! Instance name=" + __instance.name);
-            Console.WriteLine("!! Instance.GameObject name=" + __instance.gameObject.name);
+            Log.LogDebug("!! Replacing texture for CharacterDescription");
+            Log.LogDebug("!! Instance name=" + __instance.name);
+            Log.LogDebug("!! Instance.GameObject name=" + __instance.gameObject.name);
 
             // Get private variable
             // Ref: https://api.raftmodding.com/client-code-examples/untitled
             Image currImg = Traverse.Create(__instance).Field("portrait").GetValue() as Image;
 
-            //Console.WriteLine("!!# Image.name = " + currImg.name);
-            //Console.WriteLine("!!# Image.sprite.name = " + currImg.sprite.name);
+            //Log.LogDebug("!!# Image.name = " + currImg.name);
+            //Log.LogDebug("!!# Image.sprite.name = " + currImg.sprite.name);
 
             //Utils.ReplaceSpriteTexture(currImg.sprite);            
         }

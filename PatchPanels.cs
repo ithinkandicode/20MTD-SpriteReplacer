@@ -7,6 +7,7 @@ using HarmonyLib;
 using UnityEngine;
 using UnityEngine.UI;
 using flanne.UI;
+using static SpriteReplacer.SpriteReplacer;
 
 namespace SpriteReplacer
 {
@@ -15,33 +16,32 @@ namespace SpriteReplacer
         [HarmonyPatch(typeof(Panel), "Start")]
         [HarmonyPrefix]
         static void StartPrefix(ref Panel __instance)
-        {			
-			//Console.WriteLine("");
-			//Console.WriteLine("[~MODS~] PANEL_LOG: START");
+        {
+            Log.LogDebug("PANEL_LOG: START");
 
-			CanvasGroup[] canvasComponentsInChildren = __instance.GetComponentsInChildren<CanvasGroup>();
+            CanvasGroup[] canvasComponentsInChildren = __instance.GetComponentsInChildren<CanvasGroup>();
 
-			for (int i = 0; i < canvasComponentsInChildren.Length; i++)
-			{
-				GameObject currObject = canvasComponentsInChildren[i].gameObject;
-				//Console.WriteLine("[~MODS~] PANEL:" + currObject.name);
+            for (int i = 0; i < canvasComponentsInChildren.Length; i++)
+            {
+                GameObject currObject = canvasComponentsInChildren[i].gameObject;
+                Log.LogDebug("PANEL:" + currObject.name);
 
-				foreach (Image currImg in currObject.GetComponentsInChildren<Image>())
-				{
-					//Console.WriteLine("[~MODS~] PANEL_Image:" + currImg.name);
+                foreach (Image currImg in currObject.GetComponentsInChildren<Image>())
+                {
+                    Log.LogDebug("PANEL_Image:" + currImg.name);
 
-					Utils.ReplaceSpriteTexture(currImg.sprite);
+                    Utils.ReplaceSpriteTexture(currImg.sprite);
 
-					/*
+                    /*
 					if (currImg.sprite != null)
 					{
-						Console.WriteLine("[~MODS~] PANEL_Image:Sprite:BASE===:" + currImg.sprite.name);
+						Log.LogDebug("PANEL_Image:Sprite:BASE===:" + currImg.sprite.name);
 						Texture2D spriteTexture = currImg.sprite.texture;
 						if (spriteTexture != null)
 						{
-							Console.WriteLine("[~MODS~] PANEL_Image:Sprite:Texture:" + spriteTexture.name);
+							Log.LogDebug("PANEL_Image:Sprite:Texture:" + spriteTexture.name);
 							string path = Path.Combine(Path.GetDirectoryName(Application.dataPath), "texturemods", spriteTexture.name);
-							Console.WriteLine("[~MODS~] SearchPath:" + path + ".png");
+							Log.LogDebug("SearchPath:" + path + ".png");
 							if (File.Exists(path + ".png"))
 							{
 								Sprite ogSprite = currImg.sprite;
@@ -54,11 +54,11 @@ namespace SpriteReplacer
 						}
 					}
 					*/
-				}
-			}
-			//Console.WriteLine("[~MODS~] PANEL_LOG: END");
+                }
+            }
+            Log.LogDebug("PANEL_LOG: END");
 
 
-		}
-	}
+        }
+    }
 }

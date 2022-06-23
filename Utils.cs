@@ -8,6 +8,7 @@ using HarmonyLib;
 using UnityEngine;
 using UnityEngine.UI;
 using flanne.UI;
+using static SpriteReplacer.SpriteReplacer;
 
 namespace SpriteReplacer
 {
@@ -18,7 +19,7 @@ namespace SpriteReplacer
         {
             if (targetSprite != null)
             {
-                // Console.WriteLine("[SpriteReplacer] Sprite.name:" + targetSprite.name);
+                //Log.LogDebug("Sprite.name:" + targetSprite.name);
 
                 Texture2D spriteTexture = targetSprite.texture;
 
@@ -28,8 +29,8 @@ namespace SpriteReplacer
                     string modPath = SpriteReplacer.configTextureModFolder.Value;
                     string path = Path.Combine(Path.GetDirectoryName(Application.dataPath), "Mods", "Textures", modPath, subfolder, spriteTexture.name + ".png");
 
-                    //Console.WriteLine("[SpriteReplacer] Sprite.Texture.name:" + spriteTexture.name);
-                    //Console.WriteLine("[SpriteReplacer] SearchPath:" + path);
+                    //Log.LogDebug("Sprite.Texture.name:" + spriteTexture.name);
+                    //Log.LogDebug("SearchPath:" + path);
 
                     if (File.Exists(path))
                     {
@@ -40,13 +41,13 @@ namespace SpriteReplacer
                         sprite.name = ogSprite.name;
                         spriteTexture = sprite.texture;
 
-                        Console.WriteLine("[SpriteReplacer] OK! Replaced: " + path);
+                        Log.LogDebug("OK! Replaced: " + path);
 
                         return true;
                     }
                     else
                     {
-                        Console.WriteLine("[SpriteReplacer] FAIL! No image at: " + path);
+                        Log.LogDebug("FAIL! No image at: " + path);
                     }
                 }
             }
