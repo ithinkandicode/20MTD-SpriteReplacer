@@ -12,21 +12,25 @@ namespace SpriteReplacer
     [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
     public class SpriteReplacer : BaseUnityPlugin
     {
+        internal static ManualLogSource Log;
+
         // Register config settings
         public static ConfigEntry<string> configTextureModFolder;
 
         private void Awake()
         {
+            Log = base.Logger;
+
             // Setup config (args: section, key, default, description)
             configTextureModFolder = Config.Bind<string>("General", "TextureModFolder", "Vanilla", "Name of the active texture mod folder");
 
-            Logger.LogInfo($"Plugin {PluginInfo.PLUGIN_GUID} is loaded!");
+            Log.LogInfo($"Plugin {PluginInfo.PLUGIN_GUID} is loaded!");
 
             string modPath = configTextureModFolder.Value;
             string subfolder = "";
             string currentModPath = Path.Combine(Path.GetDirectoryName(Application.dataPath), "Mods", "Textures", modPath, subfolder);
 
-            Logger.LogInfo("Curent texture mods path: " + currentModPath);
+            Log.LogInfo("Curent texture mods path: " + currentModPath);
 
             // Debug options, in case you want to test specific patchers
             bool doPanels = true; // GUI, and everything in the menus before a run (incl. character sprites, weapons, rune icons)
@@ -41,9 +45,10 @@ namespace SpriteReplacer
                     // Includes basically everything on the title/loadout screen, except the blinking eyes and character portraits
                     Harmony.CreateAndPatchAll(typeof(PatchPanels));
                 }
-                catch
+                catch (Exception e)
                 {
-                    Logger.LogError($"{PluginInfo.PLUGIN_GUID} failed to patch methods (PanelHandler).");
+                    Log.LogError(e.Message);
+                    Log.LogError($"{PluginInfo.PLUGIN_GUID} failed to patch methods (PanelHandler).");
                 }
             }
 
@@ -54,9 +59,10 @@ namespace SpriteReplacer
                     // Poolhandler: Most things in the battle (ie. game) screen
                     Harmony.CreateAndPatchAll(typeof(PatchPools));
                 }
-                catch
+                catch (Exception e)
                 {
-                    Logger.LogError($"{PluginInfo.PLUGIN_GUID} failed to patch methods (PoolHandler).");
+                    Log.LogError(e.Message);
+                    Log.LogError($"{PluginInfo.PLUGIN_GUID} failed to patch methods (PoolHandler).");
                 }
             }
 
@@ -67,9 +73,10 @@ namespace SpriteReplacer
                     // MiscHandler: Everything else, special cases
                     Harmony.CreateAndPatchAll(typeof(PatchMisc));
                 }
-                catch
+                catch (Exception e)
                 {
-                    Logger.LogError($"{PluginInfo.PLUGIN_GUID} failed to patch methods (MiscHandler).");
+                    Log.LogError(e.Message);
+                    Log.LogError($"{PluginInfo.PLUGIN_GUID} failed to patch methods (MiscHandler).");
                 }
             }
         }
