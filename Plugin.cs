@@ -16,6 +16,7 @@ namespace SpriteReplacer
         // Register config settings
         public static ConfigEntry<bool> configEnableTextureMods;
         public static ConfigEntry<string> configTextureModFolder;
+        public static string SourceDirectory;
 
         private void Awake()
         {
@@ -35,12 +36,12 @@ namespace SpriteReplacer
                 return;
             }
 
-            string modPath = configTextureModFolder.Value;
-            string subfolder = "";
-            string currentModPath = Path.Combine(Path.GetDirectoryName(Application.dataPath), "Mods", "Textures", modPath, subfolder);
+            SourceDirectory = Path.Combine(Path.GetDirectoryName(Application.dataPath), "Mods", "Textures", configTextureModFolder.Value);
 
             Log.LogInfo("Current textures folder: " + configTextureModFolder.Value);
-            Log.LogInfo("Current textures path: " + currentModPath);
+            Log.LogInfo("Current textures path: " + SourceDirectory);
+
+            SpriteInfo.Init();
 
             try
             {

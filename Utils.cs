@@ -17,9 +17,7 @@ namespace SpriteReplacer
 
                 if (spriteTexture != null)
                 {
-                    string subfolder = Utils.GetTextureSubfolder(spriteTexture.name);
-                    string modPath = SpriteReplacer.configTextureModFolder.Value;
-                    string path = Path.Combine(Path.GetDirectoryName(Application.dataPath), "Mods", "Textures", modPath, subfolder, spriteTexture.name + ".png");
+                    string path = Path.Combine(SourceDirectory, SpriteInfo.GetFilePath(spriteTexture.name));
 
                     //Log.LogDebug("Sprite.Texture.name:" + spriteTexture.name);
                     //Log.LogDebug("SearchPath:" + path);
@@ -39,24 +37,12 @@ namespace SpriteReplacer
                     }
                     else
                     {
-                        Log.LogInfo("FAIL! No image at: " + path);
+                        Log.LogInfo("FAIL! No Texture available for " + spriteTexture.name);
                     }
                 }
             }
 
             return false;
-        }
-
-        // Returns the subfolder to the sprite (if available), otherwise returns an empty string
-        // Note: Yes this is innefficient, but the game only has ~100 sprites ATOW
-        static public string GetTextureSubfolder(string spriteName)
-        {
-            string subfolder = SpriteInfo.GetSubFolder(spriteName);
-            if (subfolder == "")
-            {
-                Log.LogError("Sprite " + spriteName + " has no designated subfolder.");
-            }
-            return subfolder;
         }
     }
 }
