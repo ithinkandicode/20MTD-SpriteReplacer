@@ -1,13 +1,5 @@
-﻿using System;
-using System.IO;
-using System.Text;
-using BepInEx;
-using BepInEx.Logging;
-using BepInEx.Configuration;
-using HarmonyLib;
+﻿using System.IO;
 using UnityEngine;
-using UnityEngine.UI;
-using flanne.UI;
 using static SpriteReplacer.SpriteReplacer;
 
 namespace SpriteReplacer
@@ -59,7 +51,12 @@ namespace SpriteReplacer
         // Note: Yes this is innefficient, but the game only has ~100 sprites ATOW
         static public string GetTextureSubfolder(string spriteName)
         {
-            return SpriteInfo.GetSubFolder(spriteName);
+            string subfolder = SpriteInfo.GetSubFolder(spriteName);
+            if (subfolder == "")
+            {
+                Log.LogError("Sprite " + spriteName + " has no disgnated subfolder.");
+            }
+            return subfolder;
         }
     }
 }

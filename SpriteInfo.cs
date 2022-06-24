@@ -23,6 +23,7 @@ namespace SpriteReplacer
 
     static class SpriteInfo
     {
+        //TODO: complete this dictionary with all remaining Sprites
         private static Dictionary<string, ESubfolder> SpriteDict = new Dictionary<string, ESubfolder>
         {
             // Bosses
@@ -193,7 +194,14 @@ namespace SpriteReplacer
 
         public static string GetSubFolder(string spriteName)
         {
-            return Enum.GetName(typeof(ESubfolder), SpriteDict[spriteName]);
+            if (SpriteDict.ContainsKey(spriteName))
+            {
+                return Enum.GetName(typeof(ESubfolder), SpriteDict[spriteName]);
+            }
+            else
+            {
+                return "";
+            }
         }
 
     }
