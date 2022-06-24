@@ -2,7 +2,6 @@
 using BepInEx.Logging;
 using BepInEx.Configuration;
 using System;
-using System.Collections;
 using System.IO;
 using UnityEngine;
 using HarmonyLib;
@@ -17,9 +16,9 @@ namespace SpriteReplacer
         // Register config settings
         public static ConfigEntry<bool> configEnableTextureMods;
         public static ConfigEntry<string> configTextureModFolder;
-        public static ConfigEntry<bool> configDebugDoPanels;
-        public static ConfigEntry<bool> configDebugDoPools;
-        public static ConfigEntry<bool> configDebugDoMisc;
+        public static string SourceDirectory;
+        internal static Harmony hPatchTitleInit;
+        internal static Harmony hPatchCoreInit;
 
         private void Awake()
         {
@@ -27,12 +26,7 @@ namespace SpriteReplacer
 
             // Config: General (args: section, key, default, description)
             configEnableTextureMods = Config.Bind<bool>("General", "EnableTextureMods", true, "Set to true to enable texture mods, false to completely disable them");
-            configTextureModFolder  = Config.Bind<string>("General", "TextureModFolder", "Vanilla", "Name of the active texture mod folder");
-
-            // Config: Debug (in case you want to test specific patchers)
-            configDebugDoPanels = Config.Bind<bool>("xDebug", "DebugPatchPanels", true, "Debug option. Set to false to skip patching panels (GUI, and everything in the menus before a run, including character sprites, weapons, and rune icons)");
-            configDebugDoPools  = Config.Bind<bool>("xDebug", "DebugPatchPools", true, "Debug option. Set to false to skip patching pools (most enemies and pickups)");
-            configDebugDoMisc   = Config.Bind<bool>("xDebug", "DebugPatchMisc", true, "Debug option. Set to false to skip patching misc (special cases that aren't covered by panels/pools)");
+            configTextureModFolder = Config.Bind<string>("General", "TextureModFolder", "Vanilla", "Name of the active texture mod folder");
 
             Log.LogInfo($"Plugin {PluginInfo.PLUGIN_GUID} is loaded!");
 
@@ -44,58 +38,22 @@ namespace SpriteReplacer
                 return;
             }
 
-            string modPath = configTextureModFolder.Value;
-            string subfolder = "";
-            string currentModPath = Path.Combine(Path.GetDirectoryName(Application.dataPath), "Mods", "Textures", modPath, subfolder);
+            SourceDirectory = Path.Combine(Path.GetDirectoryName(Application.dataPath), "Mods", "Textures", configTextureModFolder.Value);
 
             Log.LogInfo("Current textures folder: " + configTextureModFolder.Value);
-            Log.LogInfo("Current textures path: " + currentModPath);
+            Log.LogInfo("Current textures path: " + SourceDirectory);
 
-            bool doPanels = configDebugDoPanels.Value;
-            bool doPools = configDebugDoPools.Value;
-            bool doMisc = configDebugDoMisc.Value;
+            SpriteInfo.Init();
 
-            if (doPanels)
+            try
             {
-                try
-                {
-                    // Panels: Any GUI element
-                    // Includes basically everything on the title/loadout screen, except the blinking eyes and character portraits
-                    Harmony.CreateAndPatchAll(typeof(PatchPanels));
-                }
-                catch (Exception e)
-                {
-                    Log.LogError(e.Message);
-                    Log.LogError($"{PluginInfo.PLUGIN_GUID} failed to patch methods (PanelHandler).");
-                }
+                hPatchTitleInit = Harmony.CreateAndPatchAll(typeof(PatchTitleInit), "PatchTitleInit");
+                hPatchCoreInit = Harmony.CreateAndPatchAll(typeof(PatchCoreInit), "PatchCoreInit");
             }
-
-            if (doPools)
+            catch (Exception e)
             {
-                try
-                {
-                    // Pools: Most things in the battle (ie. game) screen
-                    Harmony.CreateAndPatchAll(typeof(PatchPools));
-                }
-                catch (Exception e)
-                {
-                    Log.LogError(e.Message);
-                    Log.LogError($"{PluginInfo.PLUGIN_GUID} failed to patch methods (PoolHandler).");
-                }
-            }
-
-            if (doMisc)
-            {
-                try
-                {
-                    // Misc: Everything else, special cases
-                    Harmony.CreateAndPatchAll(typeof(PatchMisc));
-                }
-                catch (Exception e)
-                {
-                    Log.LogError(e.Message);
-                    Log.LogError($"{PluginInfo.PLUGIN_GUID} failed to patch methods (MiscHandler).");
-                }
+                Log.LogError(e.Message);
+                Log.LogError($"{PluginInfo.PLUGIN_GUID} failed to patch methods.");
             }
         }
     }

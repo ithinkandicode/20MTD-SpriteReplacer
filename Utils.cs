@@ -1,21 +1,13 @@
-﻿using System;
-using System.IO;
-using System.Text;
-using BepInEx;
-using BepInEx.Logging;
-using BepInEx.Configuration;
-using HarmonyLib;
+﻿using System.IO;
 using UnityEngine;
-using UnityEngine.UI;
-using flanne.UI;
 using static SpriteReplacer.SpriteReplacer;
 
 namespace SpriteReplacer
 {
-    public class Utils
+    internal class Utils
     {
         // Returns true on successful patch, false otherwise
-        static public bool ReplaceSpriteTexture(Sprite targetSprite)
+        internal static bool ReplaceSpriteTexture(Sprite targetSprite)
         {
             if (targetSprite != null)
             {
@@ -25,9 +17,7 @@ namespace SpriteReplacer
 
                 if (spriteTexture != null)
                 {
-                    string subfolder = Utils.GetTextureSubfolder(spriteTexture.name);
-                    string modPath = SpriteReplacer.configTextureModFolder.Value;
-                    string path = Path.Combine(Path.GetDirectoryName(Application.dataPath), "Mods", "Textures", modPath, subfolder, spriteTexture.name + ".png");
+                    string path = Path.Combine(SourceDirectory, SpriteInfo.GetFilePath(spriteTexture.name));
 
                     //Log.LogDebug("Sprite.Texture.name:" + spriteTexture.name);
                     //Log.LogDebug("SearchPath:" + path);
@@ -41,25 +31,20 @@ namespace SpriteReplacer
                         sprite.name = ogSprite.name;
                         spriteTexture = sprite.texture;
 
-                        Log.LogInfo("OK! Replaced: " + path);
+                        Log.LogDebug("OK! Replaced: " + path);
+
+                        SpriteStore.ChangedSprites.Add(targetSprite);
 
                         return true;
                     }
                     else
                     {
-                        Log.LogInfo("FAIL! No image at: " + path);
+                        Log.LogDebug("FAIL! No Texture available for " + spriteTexture.name);
                     }
                 }
             }
 
             return false;
-        }
-
-        // Returns the subfolder to the sprite (if available), otherwise returns an empty string
-        // Note: Yes this is innefficient, but the game only has ~100 sprites ATOW
-        static public string GetTextureSubfolder(string spriteName)
-        {
-            return SpriteInfo.GetSubFolder(spriteName);
         }
     }
 }
