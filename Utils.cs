@@ -54,7 +54,7 @@ namespace SpriteReplacer
             string subfolder = SpriteInfo.GetSubFolder(spriteName);
             if (subfolder == "")
             {
-                Log.LogError("Sprite " + spriteName + " has no disgnated subfolder.");
+                Log.LogError("Sprite " + spriteName + " has no designated subfolder.");
             }
             return subfolder;
         }
