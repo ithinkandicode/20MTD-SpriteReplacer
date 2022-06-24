@@ -53,7 +53,7 @@ namespace SpriteReplacer
             catch (Exception e)
             {
                 Log.LogError(e.Message);
-                Log.LogError($"{PluginInfo.PLUGIN_GUID} failed to patch methods (TitleScreen).");
+                Log.LogError($"{PluginInfo.PLUGIN_GUID} failed to patch methods.");
             }
         }
     }
