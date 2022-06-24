@@ -7,11 +7,11 @@ using static SpriteReplacer.SpriteReplacer;
 
 namespace SpriteReplacer
 {
-    static class SpriteInfo
+    public static class SpriteInfo
     {
         private static Dictionary<string, string> SpriteDict = new Dictionary<string, string>();
 
-        public static void Init()
+        internal static void Init()
         {
             foreach (string filepath in Directory.EnumerateFiles(SourceDirectory, "*.*", SearchOption.AllDirectories).Select(filepath => filepath.Replace(SourceDirectory + "\\", "")))
             {
@@ -29,6 +29,14 @@ namespace SpriteReplacer
             else
             {
                 return "";
+            }
+        }
+
+        public static void LogAll()
+        {
+            foreach (KeyValuePair<string, string> entry in SpriteDict)
+            {
+                Log.LogInfo("SpriteDict Entry: " + entry.Key + " | " + entry.Value);
             }
         }
 

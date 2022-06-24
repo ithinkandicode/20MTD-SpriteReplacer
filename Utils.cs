@@ -4,10 +4,10 @@ using static SpriteReplacer.SpriteReplacer;
 
 namespace SpriteReplacer
 {
-    public class Utils
+    internal class Utils
     {
         // Returns true on successful patch, false otherwise
-        static public bool ReplaceSpriteTexture(Sprite targetSprite)
+        internal static bool ReplaceSpriteTexture(Sprite targetSprite)
         {
             if (targetSprite != null)
             {
@@ -32,6 +32,9 @@ namespace SpriteReplacer
                         spriteTexture = sprite.texture;
 
                         Log.LogInfo("OK! Replaced: " + path);
+
+                        //TODO: look into weak references
+                        SpriteStore.ChangedSprites.Add(targetSprite);
 
                         return true;
                     }
