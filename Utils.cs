@@ -31,16 +31,15 @@ namespace SpriteReplacer
                         sprite.name = ogSprite.name;
                         spriteTexture = sprite.texture;
 
-                        Log.LogInfo("OK! Replaced: " + path);
+                        Log.LogDebug("OK! Replaced: " + path);
 
-                        //TODO: look into weak references
                         SpriteStore.ChangedSprites.Add(targetSprite);
 
                         return true;
                     }
                     else
                     {
-                        Log.LogInfo("FAIL! No Texture available for " + spriteTexture.name);
+                        Log.LogDebug("FAIL! No Texture available for " + spriteTexture.name);
                     }
                 }
             }

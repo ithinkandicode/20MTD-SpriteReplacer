@@ -17,6 +17,8 @@ namespace SpriteReplacer
         public static ConfigEntry<bool> configEnableTextureMods;
         public static ConfigEntry<string> configTextureModFolder;
         public static string SourceDirectory;
+        internal static Harmony hPatchTitleInit;
+        internal static Harmony hPatchCoreInit;
 
         private void Awake()
         {
@@ -45,7 +47,8 @@ namespace SpriteReplacer
 
             try
             {
-                Harmony.CreateAndPatchAll(typeof(PatchStates));
+                hPatchTitleInit = Harmony.CreateAndPatchAll(typeof(PatchTitleInit), "PatchTitleInit");
+                hPatchCoreInit = Harmony.CreateAndPatchAll(typeof(PatchCoreInit), "PatchCoreInit");
             }
             catch (Exception e)
             {
