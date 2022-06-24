@@ -44,8 +44,7 @@ namespace SpriteReplacer
 
             try
             {
-                // replace all Sprites on TitleMenu init
-                Harmony.CreateAndPatchAll(typeof(PatchInitState));
+                Harmony.CreateAndPatchAll(typeof(PatchStates));
             }
             catch (Exception e)
             {
