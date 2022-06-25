@@ -17,6 +17,7 @@ namespace SpriteReplacer
         public static ConfigEntry<bool> configEnableTextureMods;
         public static ConfigEntry<string> configTextureModFolder;
         public static string SourceDirectory;
+        internal static Harmony hPatchTitleCursor;
         internal static Harmony hPatchTitleInit;
         internal static Harmony hPatchCoreInit;
 
@@ -47,6 +48,8 @@ namespace SpriteReplacer
 
             try
             {
+                // All these only need to run once, so we're saving them as static vars, so we can unpatch them later
+                hPatchTitleCursor = Harmony.CreateAndPatchAll(typeof(PatchTitleCursor), "PatchTitleCursor");
                 hPatchTitleInit = Harmony.CreateAndPatchAll(typeof(PatchTitleInit), "PatchTitleInit");
                 hPatchCoreInit = Harmony.CreateAndPatchAll(typeof(PatchCoreInit), "PatchCoreInit");
             }
