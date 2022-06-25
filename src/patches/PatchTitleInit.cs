@@ -14,11 +14,7 @@ namespace AssetReplacer
             Sprite[] sprites = Resources.FindObjectsOfTypeAll<Sprite>();
             foreach (Sprite sprite in sprites)
             {
-                SpriteStore.CleanList();
-                if (!SpriteStore.ChangedSprites.Contains(sprite))
-                {
-                    bool result = Utils.ReplaceSpriteTexture(sprite);
-                }
+                Utils.TryReplaceTexture2D(sprite);
             }
             hPatchTitleInit.UnpatchSelf();
         }
