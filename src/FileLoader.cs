@@ -25,7 +25,7 @@ namespace SpriteReplacer
                         Log.LogDebug("Found file " + Path.GetFileNameWithoutExtension(filepath) + " at " + filepath.Replace(modDir + "\\", ".\\"));
                         Texture2D texture2D = new Texture2D(2, 2, GraphicsFormat.R8G8B8A8_UNorm, 1, TextureCreationFlags.None);
                         texture2D.LoadImage(File.ReadAllBytes(filepath));
-                        TextureStore.textureDict.Add(Path.GetFileNameWithoutExtension(filepath), texture2D);
+                        TextureStore.textureDict[Path.GetFileNameWithoutExtension(filepath)] = texture2D;
                     }
                 }
                 catch (Exception e)
