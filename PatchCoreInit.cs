@@ -6,7 +6,7 @@ namespace SpriteReplacer
 {
     internal static class PatchCoreInit
     {
-        //patches Textures when initializing combat
+        //patches Textures when initializing combat (ie. the "Battle" screen)
         [HarmonyPatch(typeof(flanne.Core.InitState), "Enter")]
         [HarmonyPostfix]
         internal static void InitStatePostFix()
@@ -24,4 +24,3 @@ namespace SpriteReplacer
         }
     }
 }
-
