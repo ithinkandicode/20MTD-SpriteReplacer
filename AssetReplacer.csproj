@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyName>SpriteReplacer</AssemblyName>
-    <Description>My first plugin</Description>
-    <Version>1.0.0</Version>
+    <AssemblyName>AssetReplacer</AssemblyName>
+    <Description>Replace assets in 20MTD</Description>
+    <Version>18.0.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
-    <RootNamespace>SpriteReplacer</RootNamespace>
+    <RootNamespace>AssetReplacer</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

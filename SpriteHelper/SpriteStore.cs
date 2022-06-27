@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
-using static SpriteReplacer.SpriteReplacer;
+using static AssetReplacer.AssetReplacer;
 
-namespace SpriteReplacer
+namespace AssetReplacer
 {
     public static class SpriteStore
     {

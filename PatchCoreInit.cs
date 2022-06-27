@@ -1,8 +1,8 @@
 using HarmonyLib;
 using UnityEngine;
-using static SpriteReplacer.SpriteReplacer;
+using static AssetReplacer.AssetReplacer;
 
-namespace SpriteReplacer
+namespace AssetReplacer
 {
     internal static class PatchCoreInit
     {

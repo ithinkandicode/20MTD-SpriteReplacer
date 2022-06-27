@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using static SpriteReplacer.SpriteReplacer;
+using static AssetReplacer.AssetReplacer;
 
-namespace SpriteReplacer
+namespace AssetReplacer
 {
     public static class SpriteInfo
     {
@@ -13,9 +13,10 @@ namespace SpriteReplacer
 
         internal static void Init()
         {
-            foreach (string filepath in Directory.EnumerateFiles(SourceDirectory, "*.*", SearchOption.AllDirectories).Select(filepath => filepath.Replace(SourceDirectory + "\\", "")))
+            foreach (string filepath in Directory.EnumerateFiles(SourceSpritesDirectory, "*.*", SearchOption.AllDirectories).Select(filepath => filepath.Replace(SourceSpritesDirectory + "\\", "")))
             {
-                Log.LogDebug("Found file " + Path.GetFileNameWithoutExtension(filepath) + " at " + filepath);
+                //@todo: Uncomment this
+                //Log.LogDebug("Found file " + Path.GetFileNameWithoutExtension(filepath) + " at " + filepath);
                 SpriteDict.Add(Path.GetFileNameWithoutExtension(filepath), filepath);
             }
         }
