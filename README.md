@@ -8,8 +8,6 @@ Can currently replace:
 
 Code starts at Plugin.cs, the texture replace code is in Utils.cs.
 
-Credit to [BugFables-AssetsRedirector](https://github.com/aldelaro5/BugFables-AssetsRedirector), the code to make a replacement texture comes from their repo ([here](https://github.com/aldelaro5/BugFables-AssetsRedirector/blob/1.0.0/AssetsRedirection.cs#L81)).
-
 ## Usage
 
 1. Install BepInEx
@@ -42,3 +40,9 @@ Credit to [BugFables-AssetsRedirector](https://github.com/aldelaro5/BugFables-As
 - [Wiki » Modding](https://minutes-till-dawn.fandom.com/wiki/Modding)
 - [BepInEx Github](https://github.com/BepInEx/BepInEx/releases)
 - [BepInEx Docs](https://docs.bepinex.dev/index.html)
+
+
+## Credits
+
+- [aldelaro5/BugFables-AssetsRedirector](https://github.com/aldelaro5/BugFables-AssetsRedirector/blob/1.0.0/AssetsRedirection.cs#L81) - Code to make a replacement texture
+- [TormentedEmu/7DTD-A19-DMTMods](https://github.com/TormentedEmu/7DTD-A19-DMTMods/blob/master/TE_MenuMusic/Harmony/Harmony.cs) - Code for the music loader
