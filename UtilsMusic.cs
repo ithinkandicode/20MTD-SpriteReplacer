@@ -3,9 +3,9 @@ using System.IO;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
-using static SpriteReplacer.SpriteReplacer;
+using static AssetReplacer.AssetReplacer;
 
-namespace SpriteReplacer
+namespace AssetReplacer
 {
     /**
      * References » Unity:

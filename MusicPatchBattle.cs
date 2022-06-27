@@ -2,10 +2,10 @@
 using HarmonyLib;
 using flanne;
 using flanne.Core;
-using static SpriteReplacer.SpriteReplacer;
-using static SpriteReplacer.UtilsMusic;
+using static AssetReplacer.AssetReplacer;
+using static AssetReplacer.UtilsMusic;
 
-namespace SpriteReplacer
+namespace AssetReplacer
 {
     internal class MusicPatchBattle
     {

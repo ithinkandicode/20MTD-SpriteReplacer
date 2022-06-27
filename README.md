@@ -1,5 +1,10 @@
-# 20MTD SpriteReplacer
-BepInEx plugin to replace sprites (textures) in 20 Minutes Till Dawn.
+# 20MTD AssetReplacer
+BepInEx plugin to replace assets in 20 Minutes Till Dawn.
+
+Can currently replace:
+
+- Sprites (textures)
+- Music
 
 Code starts at Plugin.cs, the texture replace code is in Utils.cs.
 

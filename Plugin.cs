@@ -6,10 +6,10 @@ using System.IO;
 using UnityEngine;
 using HarmonyLib;
 
-namespace SpriteReplacer
+namespace AssetReplacer
 {
     [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
-    public class SpriteReplacer : BaseUnityPlugin
+    public class AssetReplacer : BaseUnityPlugin
     {
         internal static ManualLogSource Log;
 
@@ -42,7 +42,7 @@ namespace SpriteReplacer
 
             if (!enableAllMods)
             {
-                Log.LogInfo("All mods are disabled in the config (BepInEx\\config\\SpriteReplacer.cfg). No game assets will be replaced");
+                Log.LogInfo("All mods are disabled in the config (BepInEx\\config\\AssetReplacer.cfg). No game assets will be replaced");
                 return;
             }
 
@@ -60,7 +60,7 @@ namespace SpriteReplacer
 
             if (!enableMods)
             {
-                Log.LogInfo("Texture mods are disabled in the config (BepInEx\\config\\SpriteReplacer.cfg). Default game textures will be used");
+                Log.LogInfo("Texture mods are disabled in the config (BepInEx\\config\\AssetReplacer.cfg). Default game textures will be used");
                 return;
             }
 
@@ -89,7 +89,7 @@ namespace SpriteReplacer
 
             if (!enableMods)
             {
-                Log.LogInfo("Music mods are disabled in the config (BepInEx\\config\\SpriteReplacer.cfg). Default game music will be used");
+                Log.LogInfo("Music mods are disabled in the config (BepInEx\\config\\AssetReplacer.cfg). Default game music will be used");
                 return;
             }
 
