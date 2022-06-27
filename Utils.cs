@@ -17,7 +17,7 @@ namespace SpriteReplacer
 
                 if (spriteTexture != null)
                 {
-                    string path = Path.Combine(SourceDirectory, SpriteInfo.GetFilePath(spriteTexture.name));
+                    string path = Path.Combine(SourceSpritesDirectory, SpriteInfo.GetFilePath(spriteTexture.name));
 
                     //Log.LogDebug("Sprite.Texture.name:" + spriteTexture.name);
                     //Log.LogDebug("SearchPath:" + path);
@@ -31,7 +31,8 @@ namespace SpriteReplacer
                         sprite.name = ogSprite.name;
                         spriteTexture = sprite.texture;
 
-                        Log.LogDebug("OK! Replaced: " + path);
+                        //@todo: uncomment this
+                        //Log.LogDebug("OK! Replaced: " + path);
 
                         SpriteStore.ChangedSprites.Add(targetSprite);
 
@@ -39,7 +40,8 @@ namespace SpriteReplacer
                     }
                     else
                     {
-                        Log.LogDebug("FAIL! No Texture available for " + spriteTexture.name);
+                        //@todo: uncomment this
+                        //Log.LogDebug("FAIL! No Texture available for " + spriteTexture.name);
                     }
                 }
             }
