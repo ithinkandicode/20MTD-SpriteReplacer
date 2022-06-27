@@ -14,7 +14,9 @@ namespace SpriteReplacer
         internal static ManualLogSource Log;
 
         // Register config settings
+        public static ConfigEntry<bool> configEnableAllMods;
         public static ConfigEntry<bool> configEnableTextureMods;
+        public static ConfigEntry<bool> configEnableMusicMods;
         public static ConfigEntry<string> configTextureModFolder;
         public static ConfigEntry<string> configMusicModFolder;
         public static string SourceSpritesDirectory;
@@ -27,12 +29,22 @@ namespace SpriteReplacer
         {
             Log = base.Logger;
 
-            // Config: General (args: section, key, default, description)
+            // Configs (args: section, key, default, description)
+            configEnableAllMods = Config.Bind<bool>("All", "EnableAll", true, "Set to true to enable all mods, false to completely disable them");
             configEnableTextureMods = Config.Bind<bool>("General", "EnableTextureMods", true, "Set to true to enable texture mods, false to completely disable them");
             configTextureModFolder = Config.Bind<string>("General", "TextureModFolder", "Vanilla", "Name of the active texture mod folder");
+            configEnableMusicMods = Config.Bind<bool>("General", "EnableMusicMods", true, "Set to true to enable music mods, false to completely disable them");
             configMusicModFolder = Config.Bind<string>("General", "MusicModFolder", "Demo", "Name of the active music mod folder");
 
             Log.LogInfo($"Plugin {PluginInfo.PLUGIN_GUID} is loaded!");
+
+            bool enableAllMods = configEnableAllMods.Value;
+
+            if (!enableAllMods)
+            {
+                Log.LogInfo("All mods are disabled in the config (BepInEx\\config\\SpriteReplacer.cfg). No game assets will be replaced");
+                return;
+            }
 
             // Setup all directory vars
             SourceSpritesDirectory = Path.Combine(Path.GetDirectoryName(Application.dataPath), "Mods", "Textures", configTextureModFolder.Value);
@@ -73,6 +85,14 @@ namespace SpriteReplacer
 
         private void patchMusic()
         {
+            bool enableMods = configEnableMusicMods.Value;
+
+            if (!enableMods)
+            {
+                Log.LogInfo("Music mods are disabled in the config (BepInEx\\config\\SpriteReplacer.cfg). Default game music will be used");
+                return;
+            }
+
             try
             {
                 Harmony.CreateAndPatchAll(typeof(MusicPatchTitle), "MusicPatch");
