@@ -31,10 +31,10 @@ namespace SpriteReplacer
 
             // Configs (args: section, key, default, description)
             configEnableAllMods = Config.Bind<bool>("All", "EnableAll", true, "Set to true to enable all mods, false to completely disable them");
-            configEnableTextureMods = Config.Bind<bool>("General", "EnableTextureMods", true, "Set to true to enable texture mods, false to completely disable them");
-            configTextureModFolder = Config.Bind<string>("General", "TextureModFolder", "Vanilla", "Name of the active texture mod folder");
-            configEnableMusicMods = Config.Bind<bool>("General", "EnableMusicMods", true, "Set to true to enable music mods, false to completely disable them");
-            configMusicModFolder = Config.Bind<string>("General", "MusicModFolder", "Demo", "Name of the active music mod folder");
+            configEnableTextureMods = Config.Bind<bool>("Textures", "EnableTextureMods", true, "Set to true to enable texture mods, false to completely disable them");
+            configTextureModFolder = Config.Bind<string>("Textures", "TextureModFolder", "Vanilla", "Name of the active texture mod folder");
+            configEnableMusicMods = Config.Bind<bool>("Music", "EnableMusicMods", true, "Set to true to enable music mods, false to completely disable them");
+            configMusicModFolder = Config.Bind<string>("Music", "MusicModFolder", "Demo", "Name of the active music mod folder");
 
             Log.LogInfo($"Plugin {PluginInfo.PLUGIN_GUID} is loaded!");
 
