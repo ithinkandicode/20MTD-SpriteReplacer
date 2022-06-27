@@ -5,9 +5,9 @@ using System.Linq;
 using SpriteReplacer.AssetStore;
 using System.Collections.Generic;
 using UnityEngine.Experimental.Rendering;
-using static SpriteReplacer.SpriteReplacer;
+using static AssetReplacer.AssetReplacer;
 
-namespace SpriteReplacer
+namespace AssetReplacer
 {
     internal static class FileLoader
     {

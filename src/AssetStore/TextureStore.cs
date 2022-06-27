@@ -1,8 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
-using static SpriteReplacer.SpriteReplacer;
+using static AssetReplacer.AssetReplacer;
 
-namespace SpriteReplacer.AssetStore
+namespace AssetReplacer.AssetStore
 {
     public static class TextureStore
     {
