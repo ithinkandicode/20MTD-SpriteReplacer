@@ -16,7 +16,7 @@ namespace AssetReplacer
             {
                 Utils.TryReplaceTexture2D(sprite);
             }
-            hPatchTitleInit.UnpatchSelf();
+            // hPatchTitleInit.UnpatchSelf();
         }
     }
 }
