@@ -49,7 +49,7 @@ namespace AssetReplacer
                     foreach (string filepath in Directory.EnumerateFiles(audioDir, "*.*", SearchOption.AllDirectories))
                     {
                         Log.LogDebug("Found file " + Path.GetFileNameWithoutExtension(filepath) + " at " + filepath.Replace(audioDir + "\\", ".\\"));
-                        AudioClip audioClip = await UtilsMusic.LoadMusicFromDisk(audioDir, Path.GetFileName(filepath), AudioType.MPEG);
+                        AudioClip audioClip = await Utils.LoadMusicFromDisk(audioDir, Path.GetFileName(filepath), AudioType.MPEG);
                         AudioStore.audioDict[Path.GetFileNameWithoutExtension(filepath)] = audioClip;
                     }
                 }
