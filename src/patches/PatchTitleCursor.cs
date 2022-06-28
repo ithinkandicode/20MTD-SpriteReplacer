@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static AssetReplacer.AssetReplacer;
 
-namespace AssetReplacer
+namespace AssetReplacer.Patch
 {
     internal static class PatchTitleCursor
     {
@@ -33,7 +33,7 @@ namespace AssetReplacer
             {
                 // Manual replacement (as this method runs before TitleScreenEnterPostfix).
                 // This is just an easy way to get the updated sprite
-                Utils.ReplaceSpriteTexture(cursorImg.sprite);
+                Utils.TryReplaceTexture2D(cursorImg.sprite);
 
                 Vector2 hotspot = new Vector2(8, 8); // set in Unity via Player > Cursor Hotspot
                 Cursor.SetCursor(cursorImg.sprite.texture, hotspot, CursorMode.Auto);
