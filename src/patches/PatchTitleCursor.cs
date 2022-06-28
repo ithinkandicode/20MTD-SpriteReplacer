@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static AssetReplacer.AssetReplacer;
 
-namespace AssetReplacer
+namespace AssetReplacer.Patch
 {
     internal static class PatchTitleCursor
     {

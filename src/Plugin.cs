@@ -94,9 +94,9 @@ namespace AssetReplacer
 
             try
             {
-                hPatchTitleCursor = Harmony.CreateAndPatchAll(typeof(PatchTitleCursor), "PatchTitleCursor");
-                hPatchTitleInit = Harmony.CreateAndPatchAll(typeof(PatchTitleInit), "PatchTitleInit");
-                hPatchCoreInit = Harmony.CreateAndPatchAll(typeof(PatchCoreInit), "PatchCoreInit");
+                hPatchTitleCursor = Harmony.CreateAndPatchAll(typeof(Patch.PatchTitleCursor), "PatchTitleCursor");
+                hPatchTitleInit = Harmony.CreateAndPatchAll(typeof(Patch.PatchTitleStart), "PatchTitleStart");
+                hPatchCoreInit = Harmony.CreateAndPatchAll(typeof(Patch.PatchBattleStart), "PatchBattleStart");
             }
             catch (Exception e)
             {

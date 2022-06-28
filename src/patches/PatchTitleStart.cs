@@ -1,14 +1,15 @@
+using AssetReplacer.AssetStore;
 using HarmonyLib;
 using UnityEngine;
 
-namespace AssetReplacer
+namespace AssetReplacer.Patch
 {
-    internal static class PatchCoreInit
+    internal static class PatchTitleStart
     {
-        //patches Textures when initializing combat (ie. the "Battle" screen)
-        [HarmonyPatch(typeof(flanne.Core.InitState), "Enter")]
+        //patches Textures when initializing the TitleScreen
+        [HarmonyPatch(typeof(flanne.TitleScreen.TitleScreenController), "Start")]
         [HarmonyPostfix]
-        internal static void InitStatePostFix()
+        internal static async void StartPostfix()
         {
             if (AssetReplacer.ConfigEnableTextureMods.Value)
             {
@@ -21,12 +22,14 @@ namespace AssetReplacer
 
             if (AssetReplacer.ConfigEnableMusicMods.Value)
             {
+                await AudioStore.TaskInit;
                 AudioClip[] audioClips = Resources.FindObjectsOfTypeAll<AudioClip>();
-                for (int i = 0; i < audioClips.Length; i++)
+                foreach (AudioClip audioClip in audioClips)
                 {
-                    Utils.TryReplaceAudioClip(audioClips[i]);
+                    Utils.TryReplaceAudioClip(audioClip);
                 }
             }
+
             // hPatchTitleInit.UnpatchSelf();
         }
     }

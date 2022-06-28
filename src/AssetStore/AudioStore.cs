@@ -13,7 +13,6 @@ namespace AssetReplacer.AssetStore
 
         internal static void Init()
         {
-            Log.LogInfo("AudioStore Init started.");
             TaskInit = FileLoader.LoadAudio();
         }
 
