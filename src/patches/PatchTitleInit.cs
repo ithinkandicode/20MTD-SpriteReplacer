@@ -1,3 +1,4 @@
+using AssetReplacer.AssetStore;
 using HarmonyLib;
 using UnityEngine;
 using static AssetReplacer.AssetReplacer;
@@ -7,15 +8,29 @@ namespace AssetReplacer
     internal static class PatchTitleInit
     {
         //patches Textures when initializing the TitleScreen
-        [HarmonyPatch(typeof(flanne.TitleScreen.InitState), "Enter")]
+        [HarmonyPatch(typeof(flanne.TitleScreen.TitleScreenController), "Start")]
         [HarmonyPostfix]
-        internal static void TitleScreenEnterPostfix()
+        internal static async void TitleScreenEnterPostfix()
         {
-            Sprite[] sprites = Resources.FindObjectsOfTypeAll<Sprite>();
-            foreach (Sprite sprite in sprites)
+            if (AssetReplacer.ConfigEnableTextureMods.Value)
             {
-                Utils.TryReplaceTexture2D(sprite);
+                Sprite[] sprites = Resources.FindObjectsOfTypeAll<Sprite>();
+                foreach (Sprite sprite in sprites)
+                {
+                    Utils.TryReplaceTexture2D(sprite);
+                }
             }
+
+            if (AssetReplacer.ConfigEnableMusicMods.Value)
+            {
+                await AudioStore.TaskInit;
+                AudioClip[] audioClips = Resources.FindObjectsOfTypeAll<AudioClip>();
+                foreach (AudioClip audioClip in audioClips)
+                {
+                    Utils.TryReplaceAudioClip(audioClip);
+                }
+            }
+
             // hPatchTitleInit.UnpatchSelf();
         }
     }

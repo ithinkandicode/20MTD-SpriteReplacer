@@ -11,11 +11,12 @@ namespace AssetReplacer.AssetStore
 
         internal static void Init()
         {
-            FileLoader.LoadTextures(modFolders);
+            FileLoader.LoadTextures();
         }
 
         public static void LogAll()
         {
+            Log.LogInfo("Logging all TextureStore entries.");
             foreach (KeyValuePair<string, Texture2D> entry in textureDict)
             {
                 Log.LogInfo("TextureDict Entry: " + entry.Key + " | " + entry.Value);

@@ -11,11 +11,12 @@ namespace AssetReplacer.AssetStore
 
         internal static void Init()
         {
-            // FileLoader.loadSprites(modDirectories); not implemented yet
+            // FileLoader.loadSprites(); not implemented yet
         }
 
         public static void LogAll()
         {
+            Log.LogInfo("Logging all SpriteStore entries.");
             foreach (KeyValuePair<string, Sprite> entry in spriteDict)
             {
                 Log.LogInfo("TextureDict Entry: " + entry.Key + " | " + entry.Value);

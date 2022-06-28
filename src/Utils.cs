@@ -1,5 +1,6 @@
-﻿using UnityEngine;
-using SpriteReplacer.AssetStore;
+﻿using flanne;
+using UnityEngine;
+using AssetReplacer.AssetStore;
 using static AssetReplacer.AssetReplacer;
 
 namespace AssetReplacer
@@ -15,15 +16,35 @@ namespace AssetReplacer
                 {
                     Graphics.CopyTexture(TextureStore.textureDict[ogSprite.texture.name], ogSprite.texture);
                     // SpriteStore.changedList.Add(ogSprite);
-                    Log.LogInfo("OK! Replaced Texture " + ogSprite.texture.name + " for Sprite " + ogSprite.name);
+                    Log.LogDebug("OK! Replaced Texture " + ogSprite.texture.name + " for Sprite " + ogSprite.name);
                     return true;
                 }
                 else
                 {
-                    Log.LogInfo("FAIL! No Texture available for " + ogSprite.texture.name);
+                    Log.LogDebug("FAIL! No Texture available for " + ogSprite.texture.name);
                 }
             }
             return false;
+        }
+
+        internal static bool TryReplaceAudioClip(AudioClip audioClip)
+        {
+            Log.LogDebug($"[Music] Attempting to load custom music ({audioClip.name})...");
+
+            if (AudioStore.audioDict.ContainsKey(audioClip.name))
+            {
+                AudioClip modClip = AudioStore.audioDict[audioClip.name];
+                float[] samples = new float[modClip.samples * modClip.channels];
+                modClip.GetData(samples, 0);
+                audioClip.SetData(samples, 0);
+                Log.LogDebug("[Music] Success. Applying custom music track!");
+                return true;
+            }
+            else
+            {
+                Log.LogDebug($"[Music] Failed. Could not load the music track ({audioClip.name})");
+                return false;
+            }
         }
     }
 }

@@ -18,6 +18,7 @@ namespace AssetReplacer
      */
     class UtilsMusic
     {
+        //TODO: integrate into FileLoader
         /**
          * Asynchronously load a music track
          * 
@@ -25,12 +26,12 @@ namespace AssetReplacer
          * Available audio types: https://docs.unity3d.com/2019.4/Documentation/ScriptReference/AudioType.html
          * Based heavily on: https://github.com/TormentedEmu/7DTD-A19-DMTMods/blob/master/TE_MenuMusic/Harmony/Harmony.cs
          */
-        public static async Task<AudioClip> LoadMusicFromDisk(string musicFilename, AudioType audioType)
+        public static async Task<AudioClip> LoadMusicFromDisk(string SourceMusicDirectory, string musicFilename, AudioType audioType)
         {
             AudioClip audioClip = null;
             string musicPath = Path.Combine("file:///", SourceMusicDirectory, musicFilename);
 
-            Log.LogInfo($"Loading music (title.mp3) from: {musicPath}");
+            Log.LogDebug($"Loading music (title.mp3) from: {musicPath}");
 
             using (UnityWebRequest webRequest = UnityWebRequestMultimedia.GetAudioClip(musicPath, audioType))
             {
@@ -51,7 +52,7 @@ namespace AssetReplacer
                     else
                     {
                         audioClip = DownloadHandlerAudioClip.GetContent(webRequest);
-                        audioClip.name = "customMusic" + musicFilename;
+                        audioClip.name = "Custom " + musicFilename;
                     }
                 }
                 catch (Exception e)

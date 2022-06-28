@@ -11,10 +11,22 @@ namespace AssetReplacer
         [HarmonyPostfix]
         internal static void InitStatePostFix()
         {
-            Sprite[] sprites = Resources.FindObjectsOfTypeAll<Sprite>();
-            foreach (Sprite sprite in sprites)
+            if (AssetReplacer.ConfigEnableTextureMods.Value)
             {
-                Utils.TryReplaceTexture2D(sprite);
+                Sprite[] sprites = Resources.FindObjectsOfTypeAll<Sprite>();
+                foreach (Sprite sprite in sprites)
+                {
+                    Utils.TryReplaceTexture2D(sprite);
+                }
+            }
+
+            if (AssetReplacer.ConfigEnableMusicMods.Value)
+            {
+                AudioClip[] audioClips = Resources.FindObjectsOfTypeAll<AudioClip>();
+                for (int i = 0; i < audioClips.Length; i++)
+                {
+                    Utils.TryReplaceAudioClip(audioClips[i]);
+                }
             }
             // hPatchTitleInit.UnpatchSelf();
         }

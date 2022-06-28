@@ -5,6 +5,7 @@ using HarmonyLib;
 using UnityEngine;
 using BepInEx.Logging;
 using BepInEx.Configuration;
+using System.Threading.Tasks;
 using AssetReplacer.AssetStore;
 using System.Collections.Generic;
 
@@ -21,8 +22,6 @@ namespace AssetReplacer
         public static ConfigEntry<bool> ConfigEnableMusicMods;
         public static ConfigEntry<string> ConfigTextureModFolders;
         public static ConfigEntry<string> ConfigMusicModFolders;
-        public static List<string> TextureModFolders = new List<string>();
-        public static List<string> MusicModFolders = new List<string>();
         internal static Harmony hPatchTitleCursor;
         internal static Harmony hPatchTitleInit;
         internal static Harmony hPatchCoreInit;
@@ -60,10 +59,6 @@ namespace AssetReplacer
                 return;
             }
 
-            // Setup all directory vars
-            SourceSpritesDirectory = Path.Combine(Path.GetDirectoryName(Application.dataPath), "Mods", "Textures", configTextureModFolder.Value);
-            SourceMusicDirectory = Path.Combine(Path.GetDirectoryName(Application.dataPath), "Mods", "Music", configMusicModFolder.Value);
-
             this.patchAssets();
         }
 
@@ -75,9 +70,8 @@ namespace AssetReplacer
                 foreach (string modFolder in ConfigTextureModFolders.Value.Split(','))
                 {
                     Log.LogInfo("Configured Texture Mod Directory: " + modFolder);
-                    TextureModFolders.Add(modFolder);
+                    FileLoader.TextureModFolders.Add(modFolder);
                 }
-
                 TextureStore.Init();
             }
             else
@@ -92,10 +86,10 @@ namespace AssetReplacer
                 foreach (string modFolder in ConfigMusicModFolders.Value.Split(','))
                 {
                     Log.LogInfo("Configured Music Mod Directory: " + modFolder);
-                    MusicModFolders.Add(modFolder);
+                    FileLoader.MusicModFolders.Add(modFolder);
                 }
+                AudioStore.Init();
 
-                MusicStore.Init();
             }
             else
             {
@@ -111,31 +105,8 @@ namespace AssetReplacer
             catch (Exception e)
             {
                 Log.LogError(e.Message);
-                Log.LogError($"{PluginInfo.PLUGIN_GUID} failed to patch texture methods.");
+                Log.LogError($"{PluginInfo.PLUGIN_GUID} failed to patch methods.");
             }
         }
-
-        //TODO: add to PatchTitleInit/PatchCoreInit
-        // private void patchMusic()
-        // {
-        //     bool enableMods = ConfigEnableMusicMods.Value;
-
-        //     if (!enableMods)
-        //     {
-        //         Log.LogInfo("Music mods are disabled in the config (BepInEx\\config\\AssetReplacer.cfg). Default game music will be used");
-        //         return;
-        //     }
-
-        //     try
-        //     {
-        //         Harmony.CreateAndPatchAll(typeof(MusicPatchTitle), "MusicPatch");
-        //         Harmony.CreateAndPatchAll(typeof(MusicPatchBattle), "MusicPatchBattle");
-        //     }
-        //     catch (Exception e)
-        //     {
-        //         Log.LogError(e.Message);
-        //         Log.LogError($"{PluginInfo.PLUGIN_GUID} failed to patch music methods.");
-        //     }
-        // }
     }
 }
