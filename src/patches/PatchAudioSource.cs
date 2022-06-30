@@ -34,7 +34,6 @@ namespace AssetReplacer.Patch
         {
             await AudioStore.TaskInit; //wait for custom music to be fully loaded
             AudioSource audioSource = (AudioSource)Traverse.Create(__instance).Field("musicSource").GetValue();
-            Log.LogInfo("Playing music.");
             audioSource.Play();
         }
     }
