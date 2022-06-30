@@ -19,8 +19,9 @@ namespace AssetReplacer
         public static ConfigEntry<string> ConfigTextureModFolders;
         public static ConfigEntry<string> ConfigMusicModFolders;
         internal static Harmony hPatchTitleCursor;
-        internal static Harmony hPatchTitleInit;
-        internal static Harmony hPatchCoreInit;
+        internal static Harmony hPatchTitleStart;
+        internal static Harmony hPatchBattleStart;
+        internal static Harmony hPatchAudioSource;
 
         private void Awake()
         {
@@ -72,7 +73,6 @@ namespace AssetReplacer
             }
             else
             {
-
                 Log.LogInfo("Texture mods are disabled in the config (BepInEx\\config\\AssetReplacer.cfg). Default game textures will be used");
             }
 
@@ -95,8 +95,9 @@ namespace AssetReplacer
             try
             {
                 hPatchTitleCursor = Harmony.CreateAndPatchAll(typeof(Patch.PatchTitleCursor), "PatchTitleCursor");
-                hPatchTitleInit = Harmony.CreateAndPatchAll(typeof(Patch.PatchTitleStart), "PatchTitleStart");
-                hPatchCoreInit = Harmony.CreateAndPatchAll(typeof(Patch.PatchBattleStart), "PatchBattleStart");
+                hPatchTitleStart = Harmony.CreateAndPatchAll(typeof(Patch.PatchTitleStart), "PatchTitleStart");
+                hPatchBattleStart = Harmony.CreateAndPatchAll(typeof(Patch.PatchBattleStart), "PatchBattleStart");
+                hPatchAudioSource = Harmony.CreateAndPatchAll(typeof(Patch.PatchAudioSource), "PatchAudioSource");
             }
             catch (Exception e)
             {
