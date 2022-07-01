@@ -3,20 +3,17 @@ BepInEx plugin to replace assets in 20 Minutes Till Dawn.
 
 Can currently replace:
 
-- Sprites (textures)
-- Music
-
-Code starts at Plugin.cs, the texture replace code is in Utils.cs.
+- Textures of Sprites
+- Audio
 
 ## Usage
 
 1. Install BepInEx
 1. Add the plugin DLL to BepInEx\plugins
-1. Create a folder in the main game folder, named `Mods`
-1. In the Mods folder, make another folder, called `Textures`
-1. Add a folder for your mod, without spaces (eg `MyTextureMod`).
-1. Add your textures to your mod folder, using [this folder structure](https://github.com/ithinkandicode/20MTD-Graphical-Overhaul/blob/main/filetree.txt)
-1. Update the plugin config to point to your folder
+2. Create a folder in BepInEx\plugins for your mod, without spaces (eg `MyTextureMod`).
+3. In your mods folder create folders for your files called `Textures` and/or `Audio`
+4. Add your texture or audio files to the respective folder using [this folder structure](https://github.com/ithinkandicode/20MTD-Graphical-Overhaul/blob/main/filetree.txt)
+5. Update the plugin config to point to your folder
   - Config coming soon...
 
 
@@ -44,5 +41,4 @@ Code starts at Plugin.cs, the texture replace code is in Utils.cs.
 
 ## Credits
 
-- [aldelaro5/BugFables-AssetsRedirector](https://github.com/aldelaro5/BugFables-AssetsRedirector/blob/1.0.0/AssetsRedirection.cs#L81) - Code to make a replacement texture
 - [TormentedEmu/7DTD-A19-DMTMods](https://github.com/TormentedEmu/7DTD-A19-DMTMods/blob/master/TE_MenuMusic/Harmony/Harmony.cs) - Code for the music loader
