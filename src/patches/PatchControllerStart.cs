@@ -8,12 +8,14 @@ using AssetReplacer.AssetStore;
 
 namespace AssetReplacer.Patch
 {
-    internal static class PatchBattleStart
+    internal static class PatchControllerStart
     {
+        //patches Textures when initializing the TitleScreen
+        [HarmonyPatch(typeof(flanne.TitleScreen.TitleScreenController), "Start")]
         //patches Textures when initializing combat (ie. the "Battle" screen)
         [HarmonyPatch(typeof(flanne.Core.GameController), "Start")]
         [HarmonyPostfix]
-        internal static void InitStatePostFix()
+        internal static void StartPostfix()
         {
             if (AssetReplacer.ConfigEnableTextureMods.Value)
             {
