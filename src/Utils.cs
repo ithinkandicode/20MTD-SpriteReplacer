@@ -30,26 +30,6 @@ namespace AssetReplacer
             return false;
         }
 
-        internal static bool TryReplaceAudioClip(AudioClip audioClip)
-        {
-            Log.LogDebug($"[Music] Attempting to load custom music ({audioClip.name})...");
-
-            if (AudioStore.audioDict.ContainsKey(audioClip.name))
-            {
-                AudioClip modClip = AudioStore.audioDict[audioClip.name];
-                float[] samples = new float[modClip.samples * modClip.channels];
-                modClip.GetData(samples, 0);
-                audioClip.SetData(samples, 0);
-                Log.LogDebug("[Music] Success. Applying custom music track!");
-                return true;
-            }
-            else
-            {
-                Log.LogDebug($"[Music] Failed. Could not load the music track ({audioClip.name})");
-                return false;
-            }
-        }
-
         //TODO: integrate into FileLoader
         /**
         * References » Unity:

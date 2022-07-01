@@ -21,7 +21,7 @@ namespace AssetReplacer.AssetStore
             Log.LogInfo("Logging all AudioStore entries.");
             foreach (KeyValuePair<string, AudioClip> entry in audioDict)
             {
-                Log.LogInfo("TextureDict Entry: " + entry.Key + " | " + entry.Value);
+                Log.LogInfo("AudioDict Entry: " + entry.Key + " | " + entry.Value);
             }
         }
     }
