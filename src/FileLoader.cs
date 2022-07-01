@@ -16,9 +16,9 @@ namespace AssetReplacer
 
         internal static void LoadTextures()
         {
-            foreach (string folder in TextureModFolders)
+            foreach (string modName in TextureModFolders)
             {
-                string textureDir = Path.Combine(BepInEx.Paths.PluginPath, folder, "Textures");
+                string textureDir = getAssetDir(modName, "Textures");
                 try
                 {
                     foreach (string filepath in Directory.EnumerateFiles(textureDir, "*.*", SearchOption.AllDirectories))
@@ -40,9 +40,9 @@ namespace AssetReplacer
 
         internal static async Task<bool> LoadAudio()
         {
-            foreach (string pluginDir in AudioModFolders)
+            foreach (string modName in AudioModFolders)
             {
-                string audioDir = Path.Combine(BepInEx.Paths.PluginPath, pluginDir, "Audio");
+                string audioDir = getAssetDir(modName, "Audio");
                 try
                 {
                     foreach (string filepath in Directory.EnumerateFiles(audioDir, "*.*", SearchOption.AllDirectories))
@@ -61,6 +61,20 @@ namespace AssetReplacer
             }
             Log.LogInfo("Audio loaded successfully.");
             return true;
+        }
+
+        private static string getAssetDir(string modName, string assetType)
+        {
+            switch (ConfigFolderStructure.Value)
+            {
+                case "Thunderstore":
+                    return Path.Combine(BepInEx.Paths.PluginPath, modName, assetType);
+                case "Legacy":
+                    return Path.Combine(Path.GetDirectoryName(Application.dataPath), "Mods", assetType, modName);
+                default:
+                    Log.LogError("Unsupported folderstructure configured.");
+                    return "";
+            }
         }
     }
 }
