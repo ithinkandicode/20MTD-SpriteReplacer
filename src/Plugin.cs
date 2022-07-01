@@ -21,6 +21,7 @@ namespace AssetReplacer
         public static ConfigEntry<bool> ConfigTextureDynamicFogOfWar;
 
         public static ConfigEntry<string> ConfigAudioModFolders;
+        public static ConfigEntry<string> ConfigFolderStructure;
         internal static Harmony hPatchTitleCursor;
         internal static Harmony hPatchControllerStart;
         internal static Harmony hPatchAudioSource;
@@ -31,22 +32,21 @@ namespace AssetReplacer
 
             // Configs (args: section, key, default, description)
             ConfigEnableAllMods = Config.Bind<bool>("All", "EnableAll", true, "Set to true to enable all mods, false to completely disable them");
+            ConfigFolderStructure = Config.Bind<string>("All", "FolderStructure", "Thunderstore", new ConfigDescription("Change expected folder structure for legacy mods.", new AcceptableValueList<string>(new string[] { "Thunderstore", "Legacy" })));
             ConfigEnableTextureMods = Config.Bind<bool>("Textures", "EnableTextureMods", true, "Set to true to enable texture mods, false to completely disable them");
+            ConfigTextureModFolders = Config.Bind<string>("Textures", "TextureModFolders", "Demo",
+                "Name of the active texture mod folder(s)" + System.Environment.NewLine +
+                "For loading multiple texture mods add them comma seperated in ascending priority" + System.Environment.NewLine +
+                "Example:" + System.Environment.NewLine +
+                "   TextureMod1,TextureMod2,TextureMod3" + System.Environment.NewLine +
+                "TextureMod3 overwrites the textures of TextureMod2 which overwrites the textures of TextureMod1");
             ConfigEnableAudioMods = Config.Bind<bool>("Audio", "EnableAudioMods", true, "Set to true to enable audio mods, false to completely disable them");
             ConfigAudioModFolders = Config.Bind<string>("Audio", "AudioModFolders", "Demo",
-            @"Name of the active audio mod folder(s)
-            For loading multiple texture mods add them comma seperated in ascending priority
-            Example:
-                AudioMod1,AudioMod2,AudioMod3
-            AudioMod3 overwrites the soundfiles of AudioMod2 which overwrites the soundfiles of AudioMod1");
-            // Config: General (args: section, key, default, description)
-            ConfigEnableTextureMods = Config.Bind<bool>("General", "EnableTextureMods", true, "Set to true to enable texture mods, false to completely disable them");
-            ConfigTextureModFolders = Config.Bind<string>("General", "TextureModFolders", "Demo",
-            @"Name of the active texture mod folder(s)
-            For loading multiple texture mods add them comma seperated in ascending priority
-            Example:
-                TextureMod1,TextureMod2,TextureMod3
-            TextureMod3 overwrites the textures of TextureMod2 which overwrites the textures of TextureMod1");
+                "Name of the active audio mod folder(s)" + System.Environment.NewLine +
+                "For loading multiple texture mods add them comma seperated in ascending priority" + System.Environment.NewLine +
+                "Example:" + System.Environment.NewLine +
+                "   AudioMod1,AudioMod2,AudioMod3" + System.Environment.NewLine +
+                "AudioMod3 overwrites the soundfiles of AudioMod2 which overwrites the soundfiles of AudioMod1");
 
             ConfigTextureDynamicFogOfWar = Config.Bind<bool>(
                 "Textures",
