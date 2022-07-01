@@ -12,14 +12,13 @@ namespace AssetReplacer
     internal static class FileLoader
     {
         public static List<string> TextureModFolders = new List<string>();
-        public static List<string> MusicModFolders = new List<string>();
-        internal static string modDir = Path.Combine(Path.GetDirectoryName(Application.dataPath), "Mods");
+        public static List<string> AudioModFolders = new List<string>();
 
         internal static void LoadTextures()
         {
             foreach (string folder in TextureModFolders)
             {
-                string textureDir = Path.Combine(modDir, "Textures", folder);
+                string textureDir = Path.Combine(BepInEx.Paths.PluginPath, folder, "Textures");
                 try
                 {
                     foreach (string filepath in Directory.EnumerateFiles(textureDir, "*.*", SearchOption.AllDirectories))
@@ -41,9 +40,9 @@ namespace AssetReplacer
 
         internal static async Task<bool> LoadAudio()
         {
-            foreach (string folder in MusicModFolders)
+            foreach (string pluginDir in AudioModFolders)
             {
-                string audioDir = Path.Combine(modDir, "Music", folder);
+                string audioDir = Path.Combine(BepInEx.Paths.PluginPath, pluginDir, "Audio");
                 try
                 {
                     foreach (string filepath in Directory.EnumerateFiles(audioDir, "*.*", SearchOption.AllDirectories))
