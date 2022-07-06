@@ -12,9 +12,9 @@ namespace AssetReplacer.Patch
         [HarmonyPrefix]
         static void AudioSourcePlayPrefix(AudioSource __instance)
         {
-            if (AudioStore.audioDict.ContainsKey(__instance.clip.name))
+            if (AudioStore.AudioDict.ContainsKey(__instance.clip.name))
             {
-                __instance.clip = AudioStore.audioDict[__instance.clip.name];
+                __instance.clip = AudioStore.AudioDict[__instance.clip.name];
             }
         }
 
@@ -22,9 +22,9 @@ namespace AssetReplacer.Patch
         [HarmonyPrefix]
         static void AudioSourcePlayDelayPrefix(AudioSource __instance, float delay)
         {
-            if (AudioStore.audioDict.ContainsKey(__instance.clip.name))
+            if (AudioStore.AudioDict.ContainsKey(__instance.clip.name))
             {
-                __instance.clip = AudioStore.audioDict[__instance.clip.name];
+                __instance.clip = AudioStore.AudioDict[__instance.clip.name];
             }
         }
 

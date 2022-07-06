@@ -15,9 +15,9 @@ namespace AssetReplacer
         {
             if (ogSprite is not null && ogSprite.texture is not null)
             {
-                if (/*!SpriteStore.changedList.Contains(ogSprite) && */TextureStore.textureDict.ContainsKey(ogSprite.texture.name))
+                if (/*!SpriteStore.changedList.Contains(ogSprite) && */TextureStore.TextureDict.ContainsKey(ogSprite.texture.name))
                 {
-                    Graphics.CopyTexture(TextureStore.textureDict[ogSprite.texture.name], ogSprite.texture);
+                    Graphics.CopyTexture(TextureStore.TextureDict[ogSprite.texture.name], ogSprite.texture);
                     // SpriteStore.changedList.Add(ogSprite);
                     Log.LogDebug("OK! Replaced Texture " + ogSprite.texture.name + " for Sprite " + ogSprite.name);
                     return true;

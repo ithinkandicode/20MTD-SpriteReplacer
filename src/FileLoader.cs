@@ -13,27 +13,31 @@ namespace AssetReplacer
     {
         public static List<string> TextureModFolders = new List<string>();
         public static List<string> AudioModFolders = new List<string>();
+        public static List<string> AssetbundleModFolders = new List<string>();
 
         internal static void LoadTextures()
         {
             foreach (string modName in TextureModFolders)
             {
                 string textureDir = getAssetDir(modName, "Textures");
-                try
+
+                foreach (string filepath in Directory.EnumerateFiles(textureDir, "*.*", SearchOption.AllDirectories))
                 {
-                    foreach (string filepath in Directory.EnumerateFiles(textureDir, "*.*", SearchOption.AllDirectories))
+                    try
                     {
-                        Log.LogDebug("Found file " + Path.GetFileNameWithoutExtension(filepath) + " at " + filepath.Replace(textureDir + "\\", ".\\"));
+                        Log.LogDebug("Found Texture2D " + Path.GetFileNameWithoutExtension(filepath) + " at " + filepath.Replace(textureDir + "\\", ".\\"));
                         Texture2D texture2D = new Texture2D(2, 2, GraphicsFormat.R8G8B8A8_UNorm, 1, TextureCreationFlags.None);
                         texture2D.LoadImage(File.ReadAllBytes(filepath));
-                        TextureStore.textureDict[Path.GetFileNameWithoutExtension(filepath)] = texture2D;
+                        TextureStore.TextureDict[Path.GetFileNameWithoutExtension(filepath)] = texture2D;
+                    }
+                    catch (Exception e)
+                    {
+                        Log.LogError("Error loading Textures. Please make sure you configured the mod folders correctly and it doesn't contain any unrelated files.");
+                        Log.LogError("Invalid file: " + filepath);
+                        Log.LogError(e.GetType() + " " + e.Message);
                     }
                 }
-                catch (Exception e)
-                {
-                    Log.LogError("Error loading Textures. Please make sure you configured the mod folders correctly and it doesn't contain any unrelated files.");
-                    Log.LogError(e.GetType() + " " + e.Message);
-                }
+
             }
             Log.LogInfo("Textures loaded successfully.");
         }
@@ -43,24 +47,51 @@ namespace AssetReplacer
             foreach (string modName in AudioModFolders)
             {
                 string audioDir = getAssetDir(modName, "Audio");
-                try
+
+                foreach (string filepath in Directory.EnumerateFiles(audioDir, "*.*", SearchOption.AllDirectories))
                 {
-                    foreach (string filepath in Directory.EnumerateFiles(audioDir, "*.*", SearchOption.AllDirectories))
+                    try
                     {
-                        Log.LogDebug("Found file " + Path.GetFileNameWithoutExtension(filepath) + " at " + filepath.Replace(audioDir + "\\", ".\\"));
+                        Log.LogDebug("Found Audio " + Path.GetFileNameWithoutExtension(filepath) + " at " + filepath.Replace(audioDir + "\\", ".\\"));
                         AudioClip audioClip = await Utils.LoadMusicFromDisk(audioDir, Path.GetFileName(filepath), AudioType.MPEG);
-                        AudioStore.audioDict[Path.GetFileNameWithoutExtension(filepath)] = audioClip;
+                        AudioStore.AudioDict[Path.GetFileNameWithoutExtension(filepath)] = audioClip;
+                    }
+                    catch (Exception e)
+                    {
+                        Log.LogError("Error loading Audio. Please make sure you configured the mod folders correctly and it doesn't contain any unrelated files.");
+                        Log.LogError("Invalid file: " + filepath);
+                        Log.LogError(e.GetType() + " " + e.Message);
+                        return false;
                     }
                 }
-                catch (Exception e)
-                {
-                    Log.LogError("Error loading Audio. Please make sure you configured the mod folders correctly and it doesn't contain any unrelated files.");
-                    Log.LogError(e.GetType() + " " + e.Message);
-                    return false;
-                }
+
             }
             Log.LogInfo("Audio loaded successfully.");
             return true;
+        }
+
+        internal static void LoadAssetbundles()
+        {
+            foreach (string modname in AssetbundleModFolders)
+            {
+                string assetbundleDir = getAssetDir(modname, "Assetbundles");
+                foreach (string filepath in Directory.EnumerateFiles(assetbundleDir, "*.*", SearchOption.AllDirectories))
+                {
+                    try
+                    {
+                        Log.LogDebug("Found AssetBundle " + Path.GetFileNameWithoutExtension(filepath) + " at " + filepath.Replace(assetbundleDir + "\\", ".\\"));
+                        AssetBundle assetBundle = AssetBundle.LoadFromFile(filepath);
+                        AssetbundleStore.AssetbundleDict[Path.GetFileNameWithoutExtension(filepath)] = assetBundle;
+                        AssetbundleStore.LoadAll(assetBundle);
+                    }
+                    catch (Exception e)
+                    {
+                        Log.LogError("Error loading AssetBundle. Please make sure you configured the mod folders correctly and it doesn't contain any unrelated files.");
+                        Log.LogError("Invalid file: " + filepath);
+                        Log.LogError(e.GetType() + " " + e.Message);
+                    }
+                }
+            }
         }
 
         private static string getAssetDir(string modName, string assetType)

@@ -16,8 +16,10 @@ namespace AssetReplacer
         public static ConfigEntry<bool> ConfigEnableAllMods;
         public static ConfigEntry<bool> ConfigEnableTextureMods;
         public static ConfigEntry<bool> ConfigEnableAudioMods;
+        public static ConfigEntry<bool> ConfigEnableAssetBundleMods;
         public static ConfigEntry<string> ConfigTextureModFolders;
         public static ConfigEntry<string> ConfigAudioModFolders;
+        public static ConfigEntry<string> ConfigAssetBundleModFolders;
         public static ConfigEntry<string> ConfigFolderStructure;
         internal static Harmony hPatchTitleCursor;
         internal static Harmony hPatchControllerStart;
@@ -40,10 +42,17 @@ namespace AssetReplacer
             ConfigEnableAudioMods = Config.Bind<bool>("Audio", "EnableAudioMods", true, "Set to true to enable audio mods, false to completely disable them");
             ConfigAudioModFolders = Config.Bind<string>("Audio", "AudioModFolders", "Demo",
                 "Name of the active audio mod folder(s)" + System.Environment.NewLine +
-                "For loading multiple texture mods add them comma seperated in ascending priority" + System.Environment.NewLine +
+                "For loading multiple audio mods add them comma seperated in ascending priority" + System.Environment.NewLine +
                 "Example:" + System.Environment.NewLine +
                 "   AudioMod1,AudioMod2,AudioMod3" + System.Environment.NewLine +
                 "AudioMod3 overwrites the soundfiles of AudioMod2 which overwrites the soundfiles of AudioMod1");
+            ConfigEnableAssetBundleMods = Config.Bind<bool>("AssetBundle", "EnableAssetBundleMods", true, "Set to true to enable AssetBundle mods, false to completely disable them");
+            ConfigAssetBundleModFolders = Config.Bind<string>("AssetBundle", "AssetBundleModFolders", "Demo",
+                "Name of the active AssetBundle mod folder(s)" + System.Environment.NewLine +
+                "For loading multiple AssetBundle mods add them comma seperated in ascending priority" + System.Environment.NewLine +
+                "Example:" + System.Environment.NewLine +
+                "   AssetBundleMod1,AssetBundleMod2,AssetBundleMod3" + System.Environment.NewLine +
+                "AssetBundleMod3 overwrites the assetbundles of AssetBundleMod2 which overwrites the assetbundles of AssetBundleMod1");
 
             Log.LogInfo($"Plugin {PluginInfo.PLUGIN_GUID} is loaded!");
 
@@ -112,6 +121,32 @@ namespace AssetReplacer
             else
             {
                 Log.LogInfo($"Audio mods are disabled in the config {Config.ConfigFilePath}. Default game audio will be used");
+            }
+
+            //AssetBundle
+            if (ConfigEnableAssetBundleMods.Value)
+            {
+                foreach (string modFolder in ConfigAssetBundleModFolders.Value.Split(','))
+                {
+                    Log.LogInfo("Configured AssetBundle Mod Directory: " + modFolder);
+                    FileLoader.AssetbundleModFolders.Add(modFolder);
+                }
+
+                AudioStore.Init();
+
+                try
+                {
+                    //TODO: Add hook for AssetBundles
+                }
+                catch (Exception e)
+                {
+                    Log.LogError(e.Message);
+                    Log.LogError($"{PluginInfo.PLUGIN_GUID} failed to patch AssetBundles.");
+                }
+            }
+            else
+            {
+                Log.LogInfo($"AssetBundle mods are disabled in the config {Config.ConfigFilePath}. No AssetBundles will be loaded.");
             }
         }
     }
