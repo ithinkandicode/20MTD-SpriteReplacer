@@ -30,6 +30,21 @@ namespace AssetReplacer
             return false;
         }
 
+        internal static bool TryReplaceAudioClip(AudioClip audioClip)
+        {
+            if (AudioStore.AudioDict.ContainsKey(audioClip.name))
+            {
+                audioClip = AudioStore.AudioDict[audioClip.name];
+                Log.LogDebug("OK! Replaced Audio " + audioClip.name);
+                return true;
+            }
+            else
+            {
+                Log.LogDebug("FAIL! No Audio available for " + audioClip.name);
+                return false;
+            }
+        }
+
         //TODO: integrate into FileLoader
         /**
         * References » Unity:

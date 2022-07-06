@@ -12,20 +12,14 @@ namespace AssetReplacer.Patch
         [HarmonyPrefix]
         static void AudioSourcePlayPrefix(AudioSource __instance)
         {
-            if (AudioStore.AudioDict.ContainsKey(__instance.clip.name))
-            {
-                __instance.clip = AudioStore.AudioDict[__instance.clip.name];
-            }
+            Utils.TryReplaceAudioClip(__instance.clip);
         }
 
         [HarmonyPatch(typeof(AudioSource), "Play", new System.Type[] { typeof(float) })]
         [HarmonyPrefix]
         static void AudioSourcePlayDelayPrefix(AudioSource __instance, float delay)
         {
-            if (AudioStore.AudioDict.ContainsKey(__instance.clip.name))
-            {
-                __instance.clip = AudioStore.AudioDict[__instance.clip.name];
-            }
+            Utils.TryReplaceAudioClip(__instance.clip);
         }
 
         [HarmonyPatch(typeof(AudioManager), "PlayMusic")]
