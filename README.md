@@ -1,10 +1,11 @@
 # 20MTD AssetReplacer
 BepInEx plugin to replace assets in 20 Minutes Till Dawn.
 
-Can currently replace:
-
-- Textures of Sprites
-- Audio
+Can currently:
+- load either AssetBundles or loose files
+- replace Textures of Sprites
+- replace Audio
+- replace or add custom Animations to Sptires
 
 ## Usage
 
