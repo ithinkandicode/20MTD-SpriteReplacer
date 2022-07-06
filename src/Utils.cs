@@ -45,6 +45,21 @@ namespace AssetReplacer
             }
         }
 
+        internal static bool TryAnimateSpriteRenderer(SpriteRenderer spriteRenderer)
+        {
+            if (SpriteAnimationStore.SpriteAnimationDict.ContainsKey(spriteRenderer.name))
+            {
+                spriteRenderer.transform.parent.gameObject.AddComponent<SpriteRendererAnimator>();
+                Log.LogDebug("OK! Added Animator for " + spriteRenderer.name);
+                return true;
+            }
+            else
+            {
+                Log.LogDebug("FAIL! No SpriteAnimator available for " + spriteRenderer.name);
+                return false;
+            }
+        }
+
         //TODO: integrate into FileLoader
         /**
         * References » Unity:

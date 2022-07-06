@@ -4,7 +4,7 @@ using static AssetReplacer.AssetReplacer;
 
 namespace AssetReplacer.AssetStore
 {
-    public static class AssetbundleStore
+    public static class AssetBundleStore
     {
         internal static Dictionary<string, AssetBundle> AssetbundleDict = new Dictionary<string, AssetBundle>();
 

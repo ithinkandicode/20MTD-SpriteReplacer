@@ -20,6 +20,15 @@ namespace AssetReplacer.Patch
                     Utils.TryReplaceTexture2D(sprite);
                 }
             }
+
+            if (AssetReplacer.ConfigEnableSpriteAnimationMods.Value)
+            {
+                SpriteRenderer[] spriteRenderers = Resources.FindObjectsOfTypeAll<SpriteRenderer>();
+                foreach (SpriteRenderer spriteRenderer in spriteRenderers)
+                {
+                    Utils.TryAnimateSpriteRenderer(spriteRenderer);
+                }
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 using System.Threading.Tasks;
 using AssetReplacer.AssetStore;
@@ -13,7 +14,8 @@ namespace AssetReplacer
     {
         public static List<string> TextureModFolders = new List<string>();
         public static List<string> AudioModFolders = new List<string>();
-        public static List<string> AssetbundleModFolders = new List<string>();
+        public static List<string> AssetBundleModFolders = new List<string>();
+        public static List<string> SpriteAnimationModFolders = new List<string>();
 
         internal static void LoadTextures()
         {
@@ -72,22 +74,56 @@ namespace AssetReplacer
 
         internal static void LoadAssetbundles()
         {
-            foreach (string modname in AssetbundleModFolders)
+            foreach (string modname in AssetBundleModFolders)
             {
-                string assetbundleDir = getAssetDir(modname, "Assetbundles");
-                foreach (string filepath in Directory.EnumerateFiles(assetbundleDir, "*.*", SearchOption.AllDirectories))
+                string assetBundleDir = getAssetDir(modname, "Assetbundles");
+                foreach (string filepath in Directory.EnumerateFiles(assetBundleDir, "*.*", SearchOption.AllDirectories))
                 {
                     try
                     {
-                        Log.LogDebug("Found AssetBundle " + Path.GetFileNameWithoutExtension(filepath) + " at " + filepath.Replace(assetbundleDir + "\\", ".\\"));
+                        Log.LogDebug("Found AssetBundle " + Path.GetFileNameWithoutExtension(filepath) + " at " + filepath.Replace(assetBundleDir + "\\", ".\\"));
                         AssetBundle assetBundle = AssetBundle.LoadFromFile(filepath);
-                        AssetbundleStore.AssetbundleDict[Path.GetFileNameWithoutExtension(filepath)] = assetBundle;
+                        AssetBundleStore.AssetbundleDict[Path.GetFileNameWithoutExtension(filepath)] = assetBundle;
                     }
                     catch (Exception e)
                     {
                         Log.LogError("Error loading AssetBundle. Please make sure you configured the mod folders correctly and it doesn't contain any unrelated files.");
                         Log.LogError("Invalid file: " + filepath);
                         Log.LogError(e.GetType() + " " + e.Message);
+                    }
+                }
+            }
+        }
+
+        internal static void LoadSpriteAnimations()
+        {
+            foreach (string modname in SpriteAnimationModFolders)
+            {
+                string spriteAnimationDir = getAssetDir(modname, "SpriteAnimations");
+                Dictionary<string, string> files = new Dictionary<string, string>();
+                //get all files
+                foreach (string filepath in Directory.EnumerateFiles(spriteAnimationDir, "*.*", SearchOption.AllDirectories))
+                {
+                    files.Add(Path.GetFileNameWithoutExtension(filepath), filepath);
+                }
+                //handle multi-file animations
+                foreach (KeyValuePair<string, string> entry in files)
+                {
+                    String[] nameSplit = entry.Key.Split('_');
+                    if (nameSplit.Length == 2)
+                    {
+                        Dictionary<string, string> matches = files.Where(kv => kv.Key.StartsWith(nameSplit[0])).ToDictionary(k => k.Key, v => v.Value);
+                        List<Sprite> animList = new List<Sprite>();
+                        string name = nameSplit[0];
+                        foreach (KeyValuePair<string, string> kvp in matches)
+                        {
+                            files.Remove(kvp.Key);
+                            Texture2D texture2D = new Texture2D(2, 2, GraphicsFormat.R8G8B8A8_UNorm, 1, TextureCreationFlags.None);
+                            texture2D.LoadImage(File.ReadAllBytes(kvp.Value));
+                            Sprite sprite = Sprite.Create(texture2D, new Rect(0f, 0f, texture2D.width, texture2D.height), new Vector2(0.5f, 0.5f));
+                            animList.Add(sprite);
+                        }
+                        SpriteAnimationStore.SpriteAnimationDict[name] = animList;
                     }
                 }
             }
