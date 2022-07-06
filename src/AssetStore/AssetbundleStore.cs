@@ -11,6 +11,10 @@ namespace AssetReplacer.AssetStore
         internal static void Init()
         {
             FileLoader.LoadAssetbundles();
+            foreach (KeyValuePair<string, AssetBundle> entry in AssetbundleDict)
+            {
+                LoadAll(entry.Value);
+            }
         }
 
         public static void LogAll()

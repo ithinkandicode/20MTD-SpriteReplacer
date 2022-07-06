@@ -82,7 +82,6 @@ namespace AssetReplacer
                         Log.LogDebug("Found AssetBundle " + Path.GetFileNameWithoutExtension(filepath) + " at " + filepath.Replace(assetbundleDir + "\\", ".\\"));
                         AssetBundle assetBundle = AssetBundle.LoadFromFile(filepath);
                         AssetbundleStore.AssetbundleDict[Path.GetFileNameWithoutExtension(filepath)] = assetBundle;
-                        AssetbundleStore.LoadAll(assetBundle);
                     }
                     catch (Exception e)
                     {
