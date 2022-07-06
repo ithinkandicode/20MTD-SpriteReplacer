@@ -9,7 +9,7 @@ namespace AssetReplacer
     {
         private SpriteRenderer target;
         private List<Sprite> frames;
-        private int fps;
+        private int fps = 10;
         private bool active;
         private IEnumerator animation;
 
