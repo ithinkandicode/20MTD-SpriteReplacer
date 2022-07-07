@@ -24,7 +24,7 @@ namespace AssetReplacer
         public static ConfigEntry<string> ConfigSpriteAnimationModFolders;
         public static ConfigEntry<string> ConfigFolderStructure;
         internal static Harmony hPatchTitleCursor;
-        internal static Harmony hPatchControllerStart;
+        internal static Harmony hSceneLoadPatches;
         internal static Harmony hPatchAudioSource;
 
         private void Awake()
@@ -93,7 +93,7 @@ namespace AssetReplacer
                 try
                 {
                     hPatchTitleCursor = Harmony.CreateAndPatchAll(typeof(Patch.PatchTitleCursor), "PatchTitleCursor");
-                    hPatchControllerStart = Harmony.CreateAndPatchAll(typeof(Patch.PatchControllerStart), "PatchControllerStart");
+                    hSceneLoadPatches = Harmony.CreateAndPatchAll(typeof(Patch.SceneLoadPatches), "SceneLoadPatches");
                 }
                 catch (Exception e)
                 {

@@ -39,6 +39,7 @@ namespace AssetReplacer.AssetStore
                     case AudioClip a:
                         AudioStore.AudioDict.Add(a.name, a);
                         break;
+                    //TODO: Add Animations and test
                     default:
                         Log.LogError("Unsupported asset: " + asset.name);
                         break;
