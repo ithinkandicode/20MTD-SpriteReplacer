@@ -47,9 +47,9 @@ namespace AssetReplacer
 
         internal static bool TryAnimateSpriteRenderer(SpriteRenderer spriteRenderer)
         {
-            if (SpriteAnimationStore.SpriteAnimationDict.ContainsKey(spriteRenderer.name))
+            if (SpriteAnimationStore.SpriteAnimationDict.ContainsKey(spriteRenderer.name.Replace("(Clone)", "")))
             {
-                spriteRenderer.transform.parent.gameObject.AddComponent<SpriteRendererAnimator>();
+                SpriteRendererAnimator animator = spriteRenderer.gameObject.AddComponent<SpriteRendererAnimator>();
                 Log.LogDebug("OK! Added Animator for " + spriteRenderer.name);
                 return true;
             }

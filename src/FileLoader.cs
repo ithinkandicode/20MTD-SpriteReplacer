@@ -19,54 +19,51 @@ namespace AssetReplacer
 
         internal static void LoadTextures()
         {
-            foreach (string modName in TextureModFolders)
+            try
             {
-                string textureDir = getAssetDir(modName, "Textures");
-
-                foreach (string filepath in Directory.EnumerateFiles(textureDir, "*.*", SearchOption.AllDirectories))
+                foreach (string modName in TextureModFolders)
                 {
-                    try
+                    string textureDir = getAssetDir(modName, "Textures");
+
+                    foreach (string filepath in Directory.EnumerateFiles(textureDir, "*.*", SearchOption.AllDirectories))
                     {
                         Log.LogDebug("Found Texture2D " + Path.GetFileNameWithoutExtension(filepath) + " at " + filepath.Replace(textureDir + "\\", ".\\"));
                         Texture2D texture2D = new Texture2D(2, 2, GraphicsFormat.R8G8B8A8_UNorm, 1, TextureCreationFlags.None);
                         texture2D.LoadImage(File.ReadAllBytes(filepath));
                         TextureStore.TextureDict[Path.GetFileNameWithoutExtension(filepath)] = texture2D;
                     }
-                    catch (Exception e)
-                    {
-                        Log.LogError("Error loading Textures. Please make sure you configured the mod folders correctly and it doesn't contain any unrelated files.");
-                        Log.LogError("Invalid file: " + filepath);
-                        Log.LogError(e.GetType() + " " + e.Message);
-                    }
                 }
-
+            }
+            catch (Exception e)
+            {
+                Log.LogError("Error loading Textures. Please make sure you configured the mod folders correctly and it doesn't contain any unrelated files.");
+                Log.LogError(e.GetType() + " " + e.Message);
             }
             Log.LogInfo("Textures loaded successfully.");
         }
 
         internal static async Task<bool> LoadAudio()
         {
-            foreach (string modName in AudioModFolders)
+            try
             {
-                string audioDir = getAssetDir(modName, "Audio");
-
-                foreach (string filepath in Directory.EnumerateFiles(audioDir, "*.*", SearchOption.AllDirectories))
+                foreach (string modName in AudioModFolders)
                 {
-                    try
+                    string audioDir = getAssetDir(modName, "Audio");
+
+                    foreach (string filepath in Directory.EnumerateFiles(audioDir, "*.*", SearchOption.AllDirectories))
                     {
+
                         Log.LogDebug("Found Audio " + Path.GetFileNameWithoutExtension(filepath) + " at " + filepath.Replace(audioDir + "\\", ".\\"));
                         AudioClip audioClip = await Utils.LoadMusicFromDisk(audioDir, Path.GetFileName(filepath), AudioType.MPEG);
                         AudioStore.AudioDict[Path.GetFileNameWithoutExtension(filepath)] = audioClip;
                     }
-                    catch (Exception e)
-                    {
-                        Log.LogError("Error loading Audio. Please make sure you configured the mod folders correctly and it doesn't contain any unrelated files.");
-                        Log.LogError("Invalid file: " + filepath);
-                        Log.LogError(e.GetType() + " " + e.Message);
-                        return false;
-                    }
                 }
-
+            }
+            catch (Exception e)
+            {
+                Log.LogError("Error loading Audio. Please make sure you configured the mod folders correctly and it doesn't contain any unrelated files.");
+                Log.LogError(e.GetType() + " " + e.Message);
+                return false;
             }
             Log.LogInfo("Audio loaded successfully.");
             return true;
@@ -74,59 +71,67 @@ namespace AssetReplacer
 
         internal static void LoadAssetbundles()
         {
-            foreach (string modname in AssetBundleModFolders)
+            try
             {
-                string assetBundleDir = getAssetDir(modname, "Assetbundles");
-                foreach (string filepath in Directory.EnumerateFiles(assetBundleDir, "*.*", SearchOption.AllDirectories))
+                foreach (string modname in AssetBundleModFolders)
                 {
-                    try
+                    string assetBundleDir = getAssetDir(modname, "Assetbundles");
+                    foreach (string filepath in Directory.EnumerateFiles(assetBundleDir, "*.*", SearchOption.AllDirectories))
                     {
+
                         Log.LogDebug("Found AssetBundle " + Path.GetFileNameWithoutExtension(filepath) + " at " + filepath.Replace(assetBundleDir + "\\", ".\\"));
                         AssetBundle assetBundle = AssetBundle.LoadFromFile(filepath);
                         AssetBundleStore.AssetbundleDict[Path.GetFileNameWithoutExtension(filepath)] = assetBundle;
                     }
-                    catch (Exception e)
-                    {
-                        Log.LogError("Error loading AssetBundle. Please make sure you configured the mod folders correctly and it doesn't contain any unrelated files.");
-                        Log.LogError("Invalid file: " + filepath);
-                        Log.LogError(e.GetType() + " " + e.Message);
-                    }
                 }
             }
+            catch (Exception e)
+            {
+                Log.LogError("Error loading AssetBundle. Please make sure you configured the mod folders correctly and it doesn't contain any unrelated files.");
+                Log.LogError(e.GetType() + " " + e.Message);
+            }
+            Log.LogInfo("AssetBundles loaded successfully.");
         }
 
         internal static void LoadSpriteAnimations()
         {
-            foreach (string modname in SpriteAnimationModFolders)
+            try
             {
-                string spriteAnimationDir = getAssetDir(modname, "SpriteAnimations");
-                Dictionary<string, string> files = new Dictionary<string, string>();
-                //get all files
-                foreach (string filepath in Directory.EnumerateFiles(spriteAnimationDir, "*.*", SearchOption.AllDirectories))
+                foreach (string modname in SpriteAnimationModFolders)
                 {
-                    files.Add(Path.GetFileNameWithoutExtension(filepath), filepath);
-                }
-                //handle multi-file animations
-                foreach (KeyValuePair<string, string> entry in files)
-                {
-                    String[] nameSplit = entry.Key.Split('_');
-                    if (nameSplit.Length == 2)
+                    string spriteAnimationDir = getAssetDir(modname, "SpriteAnimations");
+                    Dictionary<string, string> files = new Dictionary<string, string>();
+                    //get all files
+                    foreach (string filepath in Directory.EnumerateFiles(spriteAnimationDir, "*.*", SearchOption.AllDirectories))
                     {
-                        Dictionary<string, string> matches = files.Where(kv => kv.Key.StartsWith(nameSplit[0])).ToDictionary(k => k.Key, v => v.Value);
-                        List<Sprite> animList = new List<Sprite>();
-                        string name = nameSplit[0];
-                        foreach (KeyValuePair<string, string> kvp in matches)
+                        // files.Add(Path.GetFileNameWithoutExtension(filepath), filepath);
+                        String[] nameSplit = Path.GetFileNameWithoutExtension(filepath).Split('_');
+                        if (nameSplit.Length == 2)
                         {
-                            files.Remove(kvp.Key);
+                            string name = nameSplit[0];
+
+                            if (!SpriteAnimationStore.SpriteAnimationDict.ContainsKey(name))
+                            {
+                                SpriteAnimationStore.SpriteAnimationDict.Add(name, new List<Sprite>());
+                            }
+                            List<Sprite> animList = SpriteAnimationStore.SpriteAnimationDict[name];
+
                             Texture2D texture2D = new Texture2D(2, 2, GraphicsFormat.R8G8B8A8_UNorm, 1, TextureCreationFlags.None);
-                            texture2D.LoadImage(File.ReadAllBytes(kvp.Value));
+                            texture2D.LoadImage(File.ReadAllBytes(filepath));
+                            texture2D.name = Path.GetFileNameWithoutExtension(filepath);
                             Sprite sprite = Sprite.Create(texture2D, new Rect(0f, 0f, texture2D.width, texture2D.height), new Vector2(0.5f, 0.5f));
+                            sprite.name = Path.GetFileNameWithoutExtension(filepath);
                             animList.Add(sprite);
                         }
-                        SpriteAnimationStore.SpriteAnimationDict[name] = animList;
                     }
                 }
             }
+            catch (Exception e)
+            {
+                Log.LogError("Error loading SpriteAnimations. Please make sure you configured the mod folders correctly and it doesn't contain any unrelated files.");
+                Log.LogError(e.GetType() + " " + e.Message);
+            }
+            Log.LogInfo("SpriteAnimations loaded successfully.");
         }
 
         private static string getAssetDir(string modName, string assetType)

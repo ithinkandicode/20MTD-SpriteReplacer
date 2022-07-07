@@ -2,27 +2,31 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using static AssetReplacer.AssetReplacer;
+using AssetReplacer.AssetStore;
 
 namespace AssetReplacer
 {
     public class SpriteRendererAnimator : MonoBehaviour
     {
-        private SpriteRenderer target;
-        private List<Sprite> frames;
-        private int fps = 10;
-        private bool active;
+        internal SpriteRenderer target;
+        internal List<Sprite> frames;
+        private int fps = 2;
+        private int loopDelay = 0;
+        public bool active;
         private IEnumerator animation;
 
         void Awake()
         {
             target = this.GetComponentInParent<SpriteRenderer>();
+            this.frames = SpriteAnimationStore.SpriteAnimationDict[target.name.Replace("(Clone)", "")];
         }
 
         void OnEnable()
         {
             if (target is not null)
             {
-                animation = Animate();
+                this.active = true;
+                animation = this.Animate();
                 base.StartCoroutine(animation);
             }
             else
@@ -33,6 +37,7 @@ namespace AssetReplacer
 
         void OnDisable()
         {
+            this.active = false;
             base.StopCoroutine(this.animation);
         }
 
@@ -47,7 +52,9 @@ namespace AssetReplacer
                     {
                         yield break;
                     }
+                    yield return new WaitForSecondsRealtime(1f / this.fps);
                 }
+                yield return new WaitForSecondsRealtime(loopDelay);
             }
         }
     }
