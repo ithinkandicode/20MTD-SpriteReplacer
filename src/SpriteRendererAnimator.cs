@@ -10,7 +10,7 @@ namespace AssetReplacer
     {
         internal SpriteRenderer target;
         internal List<Sprite> frames;
-        private int fps = 2;
+        private float fps = 6f;
         private int loopDelay = 0;
         public bool active;
         private IEnumerator animation;
