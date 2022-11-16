@@ -17,7 +17,21 @@ namespace AssetReplacer
             {
                 if (/*!SpriteStore.changedList.Contains(ogSprite) && */TextureStore.textureDict.ContainsKey(ogSprite.texture.name))
                 {
-                    Graphics.CopyTexture(TextureStore.textureDict[ogSprite.texture.name], ogSprite.texture);
+                    Texture2D tex = TextureStore.textureDict[ogSprite.texture.name];
+
+                    if(ogSprite.texture.format != tex.format)
+                    {
+                        Log.LogDebug($"INFO! Remaking texture {ogSprite.texture.name}, wants format {ogSprite.texture.format}, have format {tex.format}");
+
+                        Texture2D newTex = new Texture2D(tex.width, tex.height, ogSprite.texture.format, 1, false);
+
+                        newTex.SetPixels(tex.GetPixels());
+                        newTex.Apply();
+
+                        TextureStore.textureDict[ogSprite.texture.name] = newTex;
+                    }
+
+                    Graphics.CopyTexture(tex, ogSprite.texture);
                     // SpriteStore.changedList.Add(ogSprite);
                     Log.LogDebug("OK! Replaced Texture " + ogSprite.texture.name + " for Sprite " + ogSprite.name);
                     return true;
