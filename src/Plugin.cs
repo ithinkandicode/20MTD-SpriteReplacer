@@ -18,6 +18,8 @@ namespace AssetReplacer
         public static ConfigEntry<bool> ConfigEnableMusicMods;
         public static ConfigEntry<string> ConfigTextureModFolders;
         public static ConfigEntry<string> ConfigMusicModFolders;
+        public static ConfigEntry<bool> ConfigTextureDynamicFogOfWar;
+
         internal static Harmony hPatchTitleCursor;
         internal static Harmony hPatchTitleStart;
         internal static Harmony hPatchBattleStart;
@@ -45,6 +47,12 @@ namespace AssetReplacer
             Example:
                 TextureMod1,TextureMod2,TextureMod3
             TextureMod3 overwrites the textures of TextureMod2 which overwrites the textures of TextureMod1");
+
+            ConfigTextureDynamicFogOfWar = Config.Bind<bool>(
+                "Textures",
+                "EnableDynamicFogOfWarColor",
+                true,
+                "Set to true to dynamically change the fog of war color based on the ground tile texture, false to disable.");
 
             Log.LogInfo($"Plugin {PluginInfo.PLUGIN_GUID} is loaded!");
 
