@@ -356,3 +356,4 @@ lib/*.dll
 lib/*.xml
 
 !bin/Debug/netstandard2.0/SpriteReplacer.dll
+*.zip
