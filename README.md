@@ -10,14 +10,27 @@ Can currently replace:
 
 ### Thunderstore
 1. Install through Thunderstore
-2. Edit configuration to enable/disable features and add Asset-Mods to the ModFolders lists
+2. Install any Asset-Mods based on AssetReplacer
+2. See Configuration
 
 ### Manual
 1. Install BepInEx
 2. Add the plugin DLL to BepInEx\plugins
-3. Install Asset-Mods
-4. Edit AssetReplacer configuration and add Asset-Mods to the ModFolders lists
+3. Install any Asset-Mods based on AssetReplacer
+4. See Configuration
 
+## Configuration
+1. Enable/Disable which assets to replace
+2. Add the Mods directory names to the proper ModFolders configuration comma seperated
+	<br>Thunderstore Format: ModCreator-Modname
+	<br>Example:
+	```
+	[Textures]
+
+	EnableTextureMods = true
+
+	TextureModFolders = Zeprus-ExampleTextureMod,Zeprus-ExampleTextureMod2
+	```
 
 ## Setup
 
@@ -86,3 +99,7 @@ MyThunderStorePackage.zip
 ## Credits
 
 - [TormentedEmu/7DTD-A19-DMTMods](https://github.com/TormentedEmu/7DTD-A19-DMTMods/blob/master/TE_MenuMusic/Harmony/Harmony.cs) - Code for the music loader
+
+## Changelog
+- 18.0.1 Updated README
+- 18.0.0 Thunderstore release
