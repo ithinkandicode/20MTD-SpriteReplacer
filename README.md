@@ -34,8 +34,9 @@ Can currently replace:
 
 ### Thunderstore
 1. Create your [Thunderstore package](https://github.com/ebkr/r2modmanPlus/wiki/Structuring-your-Thunderstore-package)
-2. Create a folder inside your package named after the asset type you want to replace assets for (e.g. textures or audio)
-3. Place your replacement assets inside the proper subfolder in any structure
+2. Create a "plugins" folder inside your package
+3. Create a folder inside plugins named after the asset type you want to replace (e.g. textures or audio)
+4. Place your replacement assets inside the proper subfolder following any structure
 
 Structure examples:
 ```
@@ -43,32 +44,33 @@ MyThunderStorePackage.zip
 |README.md
 |icon.png
 |manifest.json
-|--Textures
-|	|--Enemies
-|	|	|EyeMonster.png
-|	|	|T_TreeMonster.png
-|	|
-|	|--Projectiles
-|		|T_GunFX.png
-|		|T_FireParticles.png
-|
-|--Audio
-	|title.mp3
-	|battle.mp3
+|--Plugins
+	|--Textures
+	|	|--Enemies
+	|	|	|EyeMonster.png
+	|	|	|T_TreeMonster.png
+	|	|
+	|	|--Projectiles
+	|		|T_GunFX.png
+	|		|T_FireParticles.png
+	|--Audio
+		|title.mp3
+		|battle.mp3
 ```
 ```
 MyThunderStorePackage.zip
 |README.md
 |icon.png
 |manifest.json
-|--Textures
-|	|EyeMonster.png
-|	|T_TreeMonster.png
-|	|T_GunFX.png
-|	|T_FireParticles.png
-|
-|--Audio
-	|title.mp3
+|--Plugins
+	|--Textures
+	|	|EyeMonster.png
+	|	|T_TreeMonster.png
+	|	|T_GunFX.png
+	|	|T_FireParticles.png
+	|
+	|--Audio
+		|title.mp3
 ```
 ## Links
 
