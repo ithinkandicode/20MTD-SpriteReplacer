@@ -8,13 +8,15 @@ Can currently replace:
 
 ## Usage
 
+### Thunderstore
+1. Install through Thunderstore
+2. Edit configuration to enable/disable features and add Asset-Mods to the ModFolders lists
+
+### Manual
 1. Install BepInEx
-1. Add the plugin DLL to BepInEx\plugins
-2. Create a folder in BepInEx\plugins for your mod, without spaces (eg `MyTextureMod`).
-3. In your mods folder create folders for your files called `Textures` and/or `Audio`
-4. Add your texture or audio files to the respective folder using [this folder structure](https://github.com/ithinkandicode/20MTD-Graphical-Overhaul/blob/main/filetree.txt)
-5. Update the plugin config to point to your folder
-  - Config coming soon...
+2. Add the plugin DLL to BepInEx\plugins
+3. Install Asset-Mods
+4. Edit AssetReplacer configuration and add Asset-Mods to the ModFolders lists
 
 
 ## Setup
@@ -28,6 +30,46 @@ Can currently replace:
 4. Build via Build » Build Solution
 	- Compiled DLL will be in /bin/Debug
 
+## Create Asset-Mods
+
+### Thunderstore
+1. Create your [Thunderstore package](https://github.com/ebkr/r2modmanPlus/wiki/Structuring-your-Thunderstore-package)
+2. Create a folder inside your package named after the asset type you want to replace assets for (e.g. textures or audio)
+3. Place your replacement assets inside the proper subfolder in any structure
+
+Structure examples:
+```
+MyThunderStorePackage.zip
+|README.md
+|icon.png
+|manifest.json
+|--Textures
+|	|--Enemies
+|	|	|EyeMonster.png
+|	|	|T_TreeMonster.png
+|	|
+|	|--Projectiles
+|		|T_GunFX.png
+|		|T_FireParticles.png
+|
+|--Audio
+	|title.mp3
+	|battle.mp3
+```
+```
+MyThunderStorePackage.zip
+|README.md
+|icon.png
+|manifest.json
+|--Textures
+|	|EyeMonster.png
+|	|T_TreeMonster.png
+|	|T_GunFX.png
+|	|T_FireParticles.png
+|
+|--Audio
+	|title.mp3
+```
 ## Links
 
 - [Steam](https://store.steampowered.com/app/1966900/20_Minutes_Till_Dawn/)
