@@ -25,48 +25,20 @@ namespace AssetReplacer.Patch
                     Utils.TryReplaceTexture2D(sprite);
                 }
 
-                if(AssetReplacer.ConfigTextureDynamicFogOfWar.Value)
+                if (AssetReplacer.ConfigTextureDynamicFogOfWar.Value)
                 {
-                    Transform fogOfWarCanvas = PlayerController.Instance.transform.Find("FogOfWarCanvas");
-
-                    if(fogOfWarCanvas != null)
+                    if (PlayerController.Instance is not null)
                     {
-                        Transform child = fogOfWarCanvas.GetChild(0);
-
-                        if(child == null)
+                        Transform fogOfWarCanvas = PlayerController.Instance.transform.Find("FogOfWarCanvas");
+                        if (fogOfWarCanvas is not null)
                         {
-                            Debug.LogError("Fog of war canvas has no child!");
-                            return;
+                            Utils.ApplyDynamicFogOfWar(fogOfWarCanvas);
                         }
-
-                        RawImage img = child.GetComponent<RawImage>();
-
-                        if(img == null)
+                        else
                         {
-                            Debug.LogError("Fog of war image has no RawImage component!");
-                            return;
+                            Debug.LogError("Unable to find fog of war canvas!");
                         }
-
-                        Texture2D grasstile = null;
-                        if(!TextureStore.textureDict.TryGetValue("T_TileGrass", out grasstile))
-                            return;
-
-                        Color[] colors = grasstile.GetPixels();
-
-                        Color additive = Color.black;
-
-                        foreach(Color color in colors)
-                        {
-                            additive += color;
-                        }
-
-                        Color average = additive / colors.Length * 0.75f;
-
-                        Material material = img.material;
-                        material.color = average;
                     }
-                    else
-                        Debug.LogError("Unable to find fog of war canvas!");
                 }
             }
         }

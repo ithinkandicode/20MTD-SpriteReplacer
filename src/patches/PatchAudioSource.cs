@@ -2,7 +2,6 @@ using flanne;
 using AssetReplacer.AssetStore;
 using HarmonyLib;
 using UnityEngine;
-using static AssetReplacer.AssetReplacer;
 
 namespace AssetReplacer.Patch
 {
@@ -12,7 +11,7 @@ namespace AssetReplacer.Patch
         [HarmonyPrefix]
         static void AudioSourcePlayPrefix(AudioSource __instance)
         {
-            if (AudioStore.audioDict.ContainsKey(__instance.clip.name))
+            if (__instance.clip is not null && AudioStore.audioDict.ContainsKey(__instance.clip.name))
             {
                 __instance.clip = AudioStore.audioDict[__instance.clip.name];
             }
@@ -22,7 +21,7 @@ namespace AssetReplacer.Patch
         [HarmonyPrefix]
         static void AudioSourcePlayDelayPrefix(AudioSource __instance, float delay)
         {
-            if (AudioStore.audioDict.ContainsKey(__instance.clip.name))
+            if (__instance.clip is not null && AudioStore.audioDict.ContainsKey(__instance.clip.name))
             {
                 __instance.clip = AudioStore.audioDict[__instance.clip.name];
             }
@@ -34,7 +33,10 @@ namespace AssetReplacer.Patch
         {
             await AudioStore.TaskInit; //wait for custom music to be fully loaded
             AudioSource audioSource = (AudioSource)Traverse.Create(__instance).Field("musicSource").GetValue();
-            audioSource.Play();
+            if (audioSource is not null)
+            {
+                audioSource.Play();
+            }
         }
     }
 }

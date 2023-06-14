@@ -22,7 +22,6 @@ namespace AssetReplacer
 
         public static ConfigEntry<string> ConfigAudioModFolders;
         public static ConfigEntry<string> ConfigFolderStructure;
-        internal static Harmony hPatchTitleCursor;
         internal static Harmony hPatchControllerStart;
         internal static Harmony hPatchAudioSource;
 
@@ -83,7 +82,6 @@ namespace AssetReplacer
 
                 try
                 {
-                    hPatchTitleCursor = Harmony.CreateAndPatchAll(typeof(Patch.PatchTitleCursor), "PatchTitleCursor");
                     hPatchControllerStart = Harmony.CreateAndPatchAll(typeof(Patch.PatchControllerStart), "PatchControllerStart");
                 }
                 catch (Exception e)
