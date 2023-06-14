@@ -101,5 +101,5 @@ MyThunderStorePackage.zip
 - [TormentedEmu/7DTD-A19-DMTMods](https://github.com/TormentedEmu/7DTD-A19-DMTMods/blob/master/TE_MenuMusic/Harmony/Harmony.cs) - Code for the music loader
 
 ## Changelog
-- 20.0.1 Updated README
+- 20.1.0 Bugfixes for 20MTD v1.0 release, increased stability
 - 20.0.0 Thunderstore release
