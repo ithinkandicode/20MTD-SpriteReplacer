@@ -1,6 +1,6 @@
 {
     "name": "AssetReplacer",
-    "version_number": "20.0.1",
+    "version_number": "20.1.0",
     "website_url": "https://github.com/ithinkandicode/20MTD-SpriteReplacer",
     "description": "Plugin to replace assets in 20 Minutes Till Dawn and support the creation of asset mods.",
     "dependencies": ["BepInExPackMTD-BepInExPack_20MTD-1.0.0"]

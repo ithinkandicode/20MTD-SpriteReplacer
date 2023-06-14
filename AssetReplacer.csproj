@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>AssetReplacer</AssemblyName>
     <Description>Replace assets in 20MTD</Description>
-    <Version>20.0.1</Version>
+    <Version>20.1.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <RootNamespace>AssetReplacer</RootNamespace>
