@@ -17,9 +17,30 @@ Can currently replace:
 1. Install BepInEx
 2. Add the plugin DLL to BepInEx\plugins
 3. Install any Asset-Mods based on AssetReplacer
+<br>They should follow this structure:
+```
+20MinutesTillDawn
+  |--BepInEx
+      |--plugins
+          |--YourModFolderName
+              |--Textures
+              |   |--Enemies
+              |   |   |EyeMonster.png
+              |   |   |T_TreeMonster.png
+              |   |--Projectiles
+              |       |T_GunFX.png
+              |       |T_FireParticles.png
+              |--Audio
+                  |title.mp3
+                  |battle.mp3
+```
+"Textures" and "Audio" may only contain files corresponding to the type. E.g. Textures should not contain any text files, only images.
+<br>Files in "Textures" and "Audio" may follow any structure. They may be located in subdirectories or directly contained in the folders.
+
 4. See Configuration
 
 ## Configuration
+### Thunderstore
 1. Enable/Disable which assets to replace
 2. Add the Mods directory names to the proper ModFolders configuration comma seperated
 	<br>Thunderstore Format: ModCreator-Modname
@@ -30,6 +51,18 @@ Can currently replace:
 	EnableTextureMods = true
 
 	TextureModFolders = Zeprus-ExampleTextureMod,Zeprus-ExampleTextureMod2
+	```
+### Manual
+2. Add the Mods directory names to the proper ModFolders configuration comma seperated
+	<br>Format: ModfolderName
+	<br>Example:
+	<br>Mod folder is BepInEx/plugins/YourModFolderName
+	```
+	[Textures]
+
+	EnableTextureMods = true
+
+	TextureModFolders = YourModFolderName
 	```
 
 ## Setup
