@@ -1,29 +1,29 @@
 namespace AssetReplacer
 {
-    public class API
+    public static class API
     {
-        public void Register(string pluginFolder, string type)
+        public static void Register(string pluginFolder, AssetType type)
         {
             switch (type)
             {
-                case "Textures":
+                case AssetType.Textures:
                     FileLoader.TextureModFolders.Insert(0, pluginFolder);
                     break;
-                case "Audio":
+                case AssetType.Audio:
                     FileLoader.AudioModFolders.Insert(0, pluginFolder);
                     break;
                 default:
                     break;
             }
         }
-        public void UnRegister(string pluginFolder, string type)
+        public static void UnRegister(string pluginFolder, AssetType type)
         {
             switch (type)
             {
-                case "Textures":
+                case AssetType.Textures:
                     FileLoader.TextureModFolders.Remove(pluginFolder);
                     break;
-                case "Audio":
+                case AssetType.Audio:
                     FileLoader.AudioModFolders.Remove(pluginFolder);
                     break;
                 default:
@@ -31,5 +31,11 @@ namespace AssetReplacer
             }
         }
 
+    }
+
+    public enum AssetType
+    {
+        Textures,
+        Audio
     }
 }

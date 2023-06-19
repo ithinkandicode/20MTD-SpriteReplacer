@@ -54,16 +54,17 @@ namespace AssetReplacer
                 "Set to true to dynamically change the fog of war color based on the ground tile texture, false to disable.");
 
             Log.LogInfo($"Plugin {PluginInfo.PLUGIN_GUID} is loaded!");
+        }
 
-            bool enableAllMods = ConfigEnableAllMods.Value;
-
-            if (!enableAllMods)
+        //run patchAssets after all Plugins executed their awake() to allow registering using the API
+        private void Start()
+        {
+            if (!ConfigEnableAllMods.Value)
             {
 
                 Log.LogInfo($"All mods are disabled in the config {Config.ConfigFilePath}. No game assets will be replaced");
                 return;
             }
-
             this.patchAssets();
         }
 

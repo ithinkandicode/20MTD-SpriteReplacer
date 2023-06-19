@@ -83,8 +83,8 @@ Can currently replace:
 2. Create a "plugins" folder inside your package
 3. Create a folder inside plugins named after the asset type you want to replace (e.g. textures or audio)
 4. Place your replacement assets inside the proper subfolder following any structure
-
-Structure examples:
+5. (Optional) Write a BepInEx-Plugin that calls AssetReplacer.API.Register("Author-Modfoldername", AssetReplacer.API.AssetType.\[Textures/Audio\]) during its Awake() function and has AssetReplacer as dependency. See example plugin.
+\nStructure examples:
 ```
 MyThunderStorePackage.zip
 |README.md
@@ -134,5 +134,6 @@ MyThunderStorePackage.zip
 - [TormentedEmu/7DTD-A19-DMTMods](https://github.com/TormentedEmu/7DTD-A19-DMTMods/blob/master/TE_MenuMusic/Harmony/Harmony.cs) - Code for the music loader
 
 ## Changelog
+- 20.2.0 added API for registering Modfolders programmatically 
 - 20.1.0 Bugfixes for 20MTD v1.0 release, increased stability
 - 20.0.0 Thunderstore release
