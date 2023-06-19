@@ -36,6 +36,14 @@
     </Reference>
   </ItemGroup>
 
+  <!--Exclude example plugin from compile-->
+  <ItemGroup>
+    <Content Remove="exampleplugin\**" />
+    <Compile Remove="exampleplugin\**" />
+    <EmbeddedResource Remove="exampleplugin\**" />
+    <None Remove="exampleplugin\**" />
+  </ItemGroup>
+
   	<!--Release packaging-->
 	<Target Name="Package" AfterTargets="Publish">
 		<MakeDir
