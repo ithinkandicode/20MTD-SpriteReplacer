@@ -84,7 +84,8 @@ Can currently replace:
 3. Create a folder inside plugins named after the asset type you want to replace (e.g. textures or audio)
 4. Place your replacement assets inside the proper subfolder following any structure
 5. (Optional) Write a BepInEx-Plugin that calls AssetReplacer.API.Register("Author-Modfoldername", AssetReplacer.API.AssetType.\[Textures/Audio\]) during its Awake() function and has AssetReplacer as dependency. See example plugin.
-<br>Structure examples:
+
+Structure examples:
 ```
 MyThunderStorePackage.zip
 |README.md
