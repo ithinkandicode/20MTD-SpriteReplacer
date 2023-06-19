@@ -88,6 +88,7 @@ Can currently replace:
 Structure examples:
 ```
 MyThunderStorePackage.zip
+|(optional)BepInExPlugin.dll
 |README.md
 |icon.png
 |manifest.json
@@ -106,6 +107,7 @@ MyThunderStorePackage.zip
 ```
 ```
 MyThunderStorePackage.zip
+|(optional)BepInExPlugin.dll
 |README.md
 |icon.png
 |manifest.json
